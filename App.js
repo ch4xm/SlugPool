@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import MapView from 'react-native-maps';
 
 const Tab = createBottomTabNavigator();
 
@@ -16,23 +17,16 @@ function BottomNavigator() {
 
 export default function App() {
   return (
-    <>
-      
-      {/* <View style={styles.container}>
-        <Text>Hello World!</Text>
-        <StatusBar style="auto" />
-      </View> */}
-      <NavigationContainer>
-        <BottomNavigator/>
-      </NavigationContainer>
-    </>
+    <NavigationContainer>
+      <BottomNavigator/>
+    </NavigationContainer>
   );
 }
 
 function MapScreen() {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Home!</Text>
+      <MapView style={styles.map} />
     </View>
   );
 }
@@ -51,5 +45,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  map: {
+    width: '100%',
+    height: '100%',
   },
 });
