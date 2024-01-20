@@ -70,6 +70,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     justifyContent: 'center',
     right: '10%',
-    bottom: '7.5%'
+    bottom: '5%'
 },
 });
