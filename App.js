@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MapView from 'react-native-maps';
@@ -35,10 +35,30 @@ function MapScreen() {
   );
 }
 
+const DATA = [
+  {
+    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+    title: 'First Item',
+  },
+  {
+    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+    title: 'Second Item',
+  },
+  {
+    id: '58694a0f-3da1-471f-bd96-145571e29d72',
+    title: 'Third Item',
+  },
+];
+
 function CarpoolScreen() {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Settings!</Text>
+      <FlatList
+        contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}
+        data={DATA}
+        renderItem={({item}) => <View style={{justifyContent: 'center', alignItems: 'center', width: '50%', height: '10%', borderColor: 'black', borderWidth: 1}}><Text>{item.title}</Text></View>}
+        keyExtractor={item => item.id}
+      />
     </View>
   );
 }
