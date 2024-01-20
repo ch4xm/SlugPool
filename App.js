@@ -3,14 +3,15 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MapView from 'react-native-maps';
+import { Ionicons } from '@expo/vector-icons';
 
 const Tab = createBottomTabNavigator();
 
 function BottomNavigator() {
   return (
     <Tab.Navigator>
-      <Tab.Screen name='Map' component={MapScreen}></Tab.Screen>
-      <Tab.Screen name='Carpool' component={CarpoolScreen}></Tab.Screen>
+      <Tab.Screen name='Map' component={MapScreen} options={{ tabBarLabel: "Home", tabBarIcon: ({ color, size }) => ( <Ionicons name="home" color={color} size={size} />), }}></Tab.Screen>
+      <Tab.Screen name='Carpool' component={CarpoolScreen} options={{ tabBarLabel: "Active Carpools", tabBarIcon: ({ color, size }) => ( <Ionicons name="car" color={color} size={size} />), }}></Tab.Screen>
     </Tab.Navigator>
   )
 }
