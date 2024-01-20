@@ -1,11 +1,46 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+const Tab = createBottomTabNavigator();
+
+function BottomNavigator() {
+  return (
+    <Tab.Navigator>
+      <Tab.Screen name='Map' component={MapScreen}></Tab.Screen>
+      <Tab.Screen name='Carpool' component={CarpoolScreen}></Tab.Screen>
+    </Tab.Navigator>
+  )
+}
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app! </Text>
-      <StatusBar style="auto" />
+    <>
+      
+      {/* <View style={styles.container}>
+        <Text>Hello World!</Text>
+        <StatusBar style="auto" />
+      </View> */}
+      <NavigationContainer>
+        <BottomNavigator/>
+      </NavigationContainer>
+    </>
+  );
+}
+
+function MapScreen() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Home!</Text>
+    </View>
+  );
+}
+
+function CarpoolScreen() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Settings!</Text>
     </View>
   );
 }
