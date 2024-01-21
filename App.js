@@ -1,8 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
-import { FlatList, Pressable, StyleSheet, Text, View, SafeAreaView } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import MapView, {Marker} from 'react-native-maps';
+import  MapView, { Marker } from 'react-native-maps';
 import { Ionicons } from '@expo/vector-icons';
 import GetLocation from 'react-native-get-location'
 
@@ -53,7 +54,7 @@ const requestLocation = () => {
 function MapScreen() {
   let loc = requestLocation;
   return (
-    <>
+    <View >
       <MapView
         style={styles.map}
         initialRegion={{
@@ -66,7 +67,7 @@ function MapScreen() {
       <Pressable style={styles.circleButton}>
         <Text adjustsFontSizeToFit>+</Text>
       </Pressable>
-    </>
+    </View>
   );
 }
 
@@ -106,17 +107,19 @@ const DATA = [
 ];
 
 function CarpoolScreen() {
+  const insets = useSafeAreaInsets();
+  
   return (
     // <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-    <SafeAreaView>
+    <View style={{ paddingTop: insets.top }}>
       <Text style={{textAlign: 'center'}}>Active Carpool Rides:</Text>
       <FlatList
-        contentContainerStyle={{flexDirection: 'column', alignSelf: 'center', width: '75%', height: '80%'}}
+        contentContainerStyle={styles.flatList}
         data={DATA}
-        renderItem={({item}) => <View style={{marginVertical: 10, backgroundColor: 'gold', alignSelf: 'center', width: '90%', height: '45%', justifyContent: 'center', borderColor: 'black', borderWidth: 1}}><Text style={{textAlign: 'center'}}>{item.title}</Text></View>}
+        renderItem={({item}) => <View style={{borderRadius: 5, marginVertical: 5, backgroundColor: 'gold', width: 350, height: 75, alignItems: 'center', justifyContent: 'center'}}><Text style={{textAlign: 'center'}}>{item.title}</Text></View>}
         keyExtractor={item => item.id}
       />
-    </SafeAreaView>
+    </View>
   );
 }
 
@@ -159,11 +162,3 @@ const styles = StyleSheet.create({
     bottom: '5%'
 },
 });
-
-export default function App() {
-  return (
-    <NavigationContainer>
-      <BottomNavigator/>
-    </NavigationContainer>
-  );
-}
