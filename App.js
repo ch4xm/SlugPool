@@ -2,9 +2,9 @@ import { StatusBar } from 'expo-status-bar';
 import { FlatList, Pressable, StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import {MapView, Marker} from 'react-native-maps';
+import MapView, {Marker} from 'react-native-maps';
 import { Ionicons } from '@expo/vector-icons';
-import GetLocation from 'react-native-get-location' 
+import GetLocation from 'react-native-get-location'
 
 const Tab = createBottomTabNavigator();
 
@@ -17,18 +17,52 @@ function BottomNavigator() {
   )
 }
 
-export default function App() {
-  return (
-    <NavigationContainer>
-      <BottomNavigator/>
-    </NavigationContainer>
-  );
-}
+const requestLocation = () => {
+  setLoading(true);
+  setLocation(null);
+  setError(null);
+
+  GetLocation.getCurrentPosition({
+    enableHighAccuracy: true,
+    timeout: 30000,
+    rationale: {
+      title: 'Location permission',
+      message: 'The app needs the permission to request your location.',
+      buttonPositive: 'Ok',
+    },
+  })
+    .then(newLocation => {
+      setLoading(false);
+      setLocation(newLocation);
+    })
+    .catch(ex => {
+      if (isLocationError(ex)) {
+        const {code, message} = ex;
+        console.warn(code, message);
+        setError(code);
+      } else {
+        console.warn(ex);
+      }
+      setLoading(false);
+      setLocation(null);
+    });
+};
+
+
 
 function MapScreen() {
+  let loc = requestLocation;
   return (
     <>
-      <MapView style={styles.map} />
+      <MapView
+        style={styles.map}
+        initialRegion={{
+          latitude: loc.latitude,
+          longitude: loc.longitude,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        }}
+      />
       <Pressable style={styles.circleButton}>
         <Text adjustsFontSizeToFit>+</Text>
       </Pressable>
@@ -125,3 +159,11 @@ const styles = StyleSheet.create({
     bottom: '5%'
 },
 });
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      <BottomNavigator/>
+    </NavigationContainer>
+  );
+}
