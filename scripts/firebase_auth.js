@@ -23,7 +23,22 @@ export const AuthContextProvider = ( { children } ) => {
                 const email = error.customData.email;
                 const credential = GoogleAuthProvider.credentialFromError(error);
             });
-        
     };
+
+    const SignOut = () => {
+        signOut(auth);
+    }
+
+    return(
+        <AuthContext.Provider value={ { GoogleLogIn, SignOut, User } }>
+            { children }
+        </AuthContext.Provider>
+    )
+
+}
+
+export const UserAuth = () => {
+    return useContext( AuthContext );
+}
 
 export default GoogleSignIn;
