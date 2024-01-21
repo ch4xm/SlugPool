@@ -1,27 +1,17 @@
 import { StatusBar } from 'expo-status-bar';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { FlatList, Pressable, StyleSheet, Text, View, Image, TouchableHighlight } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MapView, { Marker} from 'react-native-maps';
 import { Ionicons } from '@expo/vector-icons';
 // import GetLocation from 'react-native-get-location'
 import * as Location from 'expo-location';
 import React, { useState, useEffect } from 'react';
+//react navigation
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import { createStackNavigator } from '@react-navigation/stack';
-import { useNavigation } from '@react-navigation/native';
-import { useRoute } from '@react-navigation/native';
-import { initializeApp } from 'firebase/app';
+import { NavigationContainer, useRoute, useNavigation } from '@react-navigation/native';
 
-const firebaseConfig = {
-  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-  authDomain: "slugpool-cruzhacks24.firebaseapp.com",
-  projectId: "slugpool-cruzhacks24",
-  storageBucket: "slugpool-cruzhacks24.appspot.com",
-  messagingSenderId: "1057846058539",
-  appId: "1:1057846058539:web:0c8ccc6e592fa1fe0fd46e"
-};
 
 
 
