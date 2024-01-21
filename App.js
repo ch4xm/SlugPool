@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
+import { FlatList, Pressable, StyleSheet, Text, View, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import  MapView, { Marker } from 'react-native-maps';
@@ -61,7 +61,16 @@ function MapScreen() {
           // latitudeDelta: 0.0922,
           // longitudeDelta: 0.0421,
         // }}
-      />
+      >
+      <Marker
+            coordinate={{latitude: 37.78825,
+            longitude: -122.4324}}
+            title={"title"}
+            description={"description"}
+         >
+        <Image source={require('./assets/marker-POC.png')} style={{height: 100, width: 35}}></Image>
+      </Marker>
+      </MapView>
       <Pressable style={styles.circleButton}>
         <Text adjustsFontSizeToFit>+</Text>
       </Pressable>
