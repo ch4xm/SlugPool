@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MapView, { Marker} from 'react-native-maps';
 import { Ionicons } from '@expo/vector-icons';
+<<<<<<< HEAD
 // import GetLocation from 'react-native-get-location'
 import * as Location from 'expo-location';
 import React, { useState, useEffect } from 'react';
@@ -24,6 +25,11 @@ const firebaseConfig = {
 };
 
 
+=======
+// import {Transitioning, Transition} from 'react-native-reanimated';
+// import GetLocation from 'react-native-get-location';
+// import React, {useRef} from 'react';
+>>>>>>> bc02c94 (yep)
 
 const Tab = createBottomTabNavigator();
 
@@ -172,47 +178,52 @@ function MapScreen({ route }) {
 const DATA = [
   {
     id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: 'Driver Name: \n\n Starting From: \t Coming From: \n Space Available: \t Price: ',
+    title: '\tDriver Name: \n \tStarting From: \n \tComing From: \n \tSpace Available: \n \tPrice: ',
   },
   {
     id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: 'Driver Name: \n\n Starting From: \t Coming From: \n Space Available: \t Price: ',
+    title: '\tDriver Name: \n \tStarting From: \n \tComing From: \n \tSpace Available: \n \tPrice: ',
   },
   {
     id: '58694a0f3da1-471f-bd96-145571e29d72',
-    title: 'Driver Name: \n\n Starting From: \t Coming From: \n Space Available: \t Price: ',
+    title: '\tDriver Name: \n \tStarting From: \n \tComing From: \n \tSpace Available: \n \tPrice: ',
   },
   {
     id: '58694a0f-3da1-47f-bd96-145571e29d72',
-    title: 'Driver Name: \n\n Starting From: \t Coming From: \n Space Available: \t Price: ',
+    title: '\tDriver Name: \n \tStarting From: \n \tComing From: \n \tSpace Available: \n \tPrice: ',
   },
   {
     id: '58694a0f-3da1-471fbd96-145571e29d72',
-    title: 'Driver Name: \n\n Starting From: \t Coming From: \n Space Available: \t Price: ',
+    title: '\tDriver Name: \n \tStarting From: \n \tComing From: \n \tSpace Available: \n \tPrice: ',
   },
   {
     id: '58694a0f-3da1-471f-bd96-14551e29d72',
-    title: 'Driver Name: \n\n Starting From: \t Coming From: \n Space Available: \t Price: ',
+    title: '\tDriver Name: \n \tStarting From: \n \tComing From: \n \tSpace Available: \n \tPrice: ',
   },
   {
     id: '58694a0f-3da1-471f-bd96-14557e29d72',
-    title: 'Driver Name: \n\n Starting From: \t Coming From: \n Space Available: \t Price: ',
+    title: '\tDriver Name: \n \tStarting From: \n \tComing From: \n \tSpace Available: \n \tPrice: ',
   },
   {
     id: '58694a0f-3da1-471f-bd96145571e29d72',
-    title: 'Driver Name: \n\n Starting From: \t Coming From: \n Space Available: \t Price: ',
+    title: '\tDriver Name: \n \tStarting From: \n \tComing From: \n \tSpace Available: \n \tPrice: ',
   },
   {
     id: '586d94a0f-3da1-471f-bd96145571e29d72',
-    title: 'Driver Name: \n\n Starting From: \t Coming From: \n Space Available: \t Price: ',
+    title: '\tDriver Name: \n \tStarting From: \n \tComing From: \n \tSpace Available: \n \tPrice: ',
   },
   {
+<<<<<<< HEAD
     id: '58694a0f-3da1-471f-bdd96145571e29d72',
     title: 'Driver Name: \n\n Starting From: \t Coming From: \n Space Available: \t Price: ',
+=======
+    id: '58694a0f-3da1-471f-bd96145571e29d72',
+    title: '\tDriver Name: \n \tStarting From: \n \tComing From: \n \tSpace Available: \n \tPrice: ',
+>>>>>>> bc02c94 (yep)
   },
   {
     id: '58694aa0f-3da1-471f-bd96145571e29d72',
-    title: 'Driver Name: \n\n Starting From: \t Coming From: \n Space Available: \t Price: ',
+    title: '\tDriver Name: \n \tStarting From: \n \tComing From: \n \tSpace Available: \n \tPrice: ',
   },
 ];
 
@@ -226,19 +237,23 @@ function CarpoolScreen() {
         contentContainerStyle={styles.flatList}
         data={DATA}
         renderItem={({item}) => <View style={
-          { borderRadius: 5,
+          { borderRadius: 20,
             marginVertical: 5, 
             backgroundColor: 'lightpink', 
             width: 350, 
             height: 100, 
-            alignItems: 'center', 
+            alignItems: 'left', 
             justifyContent: 'center' }
+<<<<<<< HEAD
           } >
             
           <Text style={{textAlign: 'center'}}>{item.title}</Text>
           
           </View>}
         
+=======
+          } ><Text style={{textAlign: 'left', fontWeight:'bold'}}>{item.title}</Text></View>}
+>>>>>>> bc02c94 (yep)
           keyExtractor={item => item.id}
       />
     </View>
