@@ -23,11 +23,6 @@ const firebaseConfig = {
   appId: "1:1057846058539:web:0c8ccc6e592fa1fe0fd46e"
 };
 
-
-// import {Transitioning, Transition} from 'react-native-reanimated';
-// import GetLocation from 'react-native-get-location';
-// import React, {useRef} from 'react';
-
 const Tab = createBottomTabNavigator();
 
 function BottomNavigator() {
