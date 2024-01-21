@@ -5,7 +5,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import  MapView, { Marker } from 'react-native-maps';
 import { Ionicons } from '@expo/vector-icons';
-import GetLocation from 'react-native-get-location'
 
 const Tab = createBottomTabNavigator();
 
@@ -162,3 +161,12 @@ const styles = StyleSheet.create({
     bottom: '5%'
 },
 });
+
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      <BottomNavigator/>
+    </NavigationContainer>
+  );
+}
