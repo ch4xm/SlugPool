@@ -176,10 +176,10 @@ function MapScreen({ route }) {
             </Pressable>
             <Text style={styles.modalText}>Offer a Ride</Text>
             <TextInput style={styles.textBox} placeholder='Name' placeholderTextColor={'#808080'}></TextInput>
-            <TextInput style={styles.textBox} placeholder='Email Address' placeholderTextColor={'#808080'}></TextInput>
             <TextInput style={styles.textBox} placeholder='Carpool Seats Available' placeholderTextColor={'#808080'}></TextInput>
             <TextInput style={styles.textBox} placeholder='Starting Point' placeholderTextColor={'#808080'}></TextInput>
             <TextInput style={styles.textBox} placeholder='Destination' placeholderTextColor={'#808080'}></TextInput>
+            <TextInput style={styles.textBox} placeholder='Gas Price' placeholderTextColor={'#808080'}></TextInput>
             <Pressable style={{backgroundColor: 'black', height: 50, width: 200, justifyContent: 'center', marginTop: 15, borderRadius: 10}} onPress={() => {setModalVisible(!modalVisible); console.log('submitted')}}>
               <Text style={{color: 'white', textAlign: 'center', fontSize: 24, fontWeight: 'bold'}}>Submit</Text>
             </Pressable>
@@ -207,6 +207,9 @@ function MapScreen({ route }) {
   );
 }
 
+function submitRide(name, seats, start, destination, price) {
+
+}
 
 const DATA = [
   {
