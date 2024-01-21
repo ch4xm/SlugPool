@@ -16,7 +16,7 @@ import { initializeApp } from 'firebase/app';
 require('dotenv').config();
 
 const firebaseConfig = {
-  apiKey: process.env.FIREBASE_API_KEY,
+  apiKey: 'AIzaSyC3wgvSzRB2_zS3tQH3X9AtfiOwtgVcUzI',
   authDomain: "slugpool-cruzhacks24.firebaseapp.com",
   projectId: "slugpool-cruzhacks24",
   storageBucket: "slugpool-cruzhacks24.appspot.com",
