@@ -1,26 +1,26 @@
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import {
+    signInWithPopup,
+    GoogleAuthProvider,
+    signOut,
+    onAuthStateChanged
+} from "firebase/auth";
+import {auth} from "./firebase_initialize";
 
-const auth = getAuth();
-createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-        // Signed up 
-        const user = userCredential.user;
-        // ...
-    })
-    .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // ..
-    });
+const AuthContext = createContext();
 
+const GoogleSignIn = () => {
+    const signInWithGoogle = async () => {
+      try {
+        const { idToken } = await firebase.auth().signInWithPopup('google');
+        console.log('Google Sign In Success', idToken);
+      } catch (error) {
+        console.error('Google Sign In Error', error);
+      }
+    };
+  
+    return (
+      <Button title="Sign In with Google" onPress={signInWithGoogle} />
+    );
+  };
 
-signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-        // Signed in 
-        const user = userCredential.user;
-        // ...
-    })
-    .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-    });
+export default GoogleSignIn;

@@ -3,14 +3,14 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { FlatList, Pressable, StyleSheet, Text, View, Image, TouchableHighlight, Modal } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import MapView, { Marker} from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 import { Ionicons } from '@expo/vector-icons';
 // import GetLocation from 'react-native-get-location'
 import * as Location from 'expo-location';
 import React, { useState, useEffect } from 'react';
 //react navigation
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer, useRoute, useNavigation } from '@react-navigation/native';
 
@@ -23,8 +23,8 @@ function BottomNavigator() {
 
   return (
     <Tab.Navigator>
-      <Tab.Screen name='Map' component={MapScreen} options={{ headerShown: false, tabBarLabel: "Home", tabBarIcon: ({ color, size }) => ( <Ionicons name="home" color={color} size={size} /> ), }}></Tab.Screen>
-      <Tab.Screen name='Carpool' component={CarpoolScreen} options={{ tabBarLabel: "Active Carpools", tabBarIcon: ({ color, size }) => ( <Ionicons name="car" color={color} size={size} />), }}></Tab.Screen>
+      <Tab.Screen name='Map' component={MapScreen} options={{ headerShown: false, tabBarLabel: "Home", tabBarIcon: ({ color, size }) => (<Ionicons name="home" color={color} size={size} />), }}></Tab.Screen>
+      <Tab.Screen name='Carpool' component={CarpoolScreen} options={{ tabBarLabel: "Active Carpools", tabBarIcon: ({ color, size }) => (<Ionicons name="car" color={color} size={size} />), }}></Tab.Screen>
     </Tab.Navigator>
   )
 }
@@ -73,7 +73,7 @@ const requestLocation = () => {
 
   useEffect(() => {
     (async () => {
-      
+
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
         setErrorMsg('Permission to access location was denied');
@@ -82,7 +82,7 @@ const requestLocation = () => {
 
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
-      console.log( "location: " + location.coords.latitude + ", " + location.coords.longitude );
+      console.log("location: " + location.coords.latitude + ", " + location.coords.longitude);
     })();
   }, []);
 
@@ -91,7 +91,7 @@ const requestLocation = () => {
     text = errorMsg;
   } else if (location) {
     text = JSON.stringify(location);
-    navigation.navigate('home', {latitude: location.coords.latitude, longitude: location.coords.longitude});
+    navigation.navigate('home', { latitude: location.coords.latitude, longitude: location.coords.longitude });
   }
 };
 
@@ -136,22 +136,22 @@ function MapScreen({ route }) {
   }, []);
 
   const onRegionChange = (region) => {
-    console. log ( region )
+    console.log(region)
   }
 
   return (
     <View>
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'black'}}>
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'black' }}>
         <Modal
           animationType="slide"
           transparent={true}
           visible={settingsVisible}
           onRequestClose={() => {
             setSettingsVisible(!settingsVisible);
-        }}>            
+          }}>
           <View style={styles.modals}>
             <Pressable
-              style={{...styles.circleButton, shadowColor: 'transparent', top: 0, right: 0}}
+              style={{ ...styles.circleButton, shadowColor: 'transparent', top: 0, right: 0 }}
               onPress={() => setSettingsVisible(!settingsVisible)}>
               <Ionicons name="close-outline" size={30}></Ionicons>
             </Pressable>
@@ -164,10 +164,10 @@ function MapScreen({ route }) {
           visible={modalVisible}
           onRequestClose={() => {
             setModalVisible(!modalVisible);
-        }}>
-          <View style={{...styles.modals, ...styles.shadow}}>
+          }}>
+          <View style={{ ...styles.modals, ...styles.shadow }}>
             <Pressable
-              style={{...styles.circleButton, shadowColor: 'transparent', top: 0, right: 0}}
+              style={{ ...styles.circleButton, shadowColor: 'transparent', top: 0, right: 0 }}
               onPress={() => setModalVisible(!modalVisible)}>
               <Ionicons name="close-outline" size={30}></Ionicons>
             </Pressable>
@@ -176,21 +176,21 @@ function MapScreen({ route }) {
         </Modal>
       </View>
       <MapView
-      style={{width: '100%', height: '100%'}}
-      mapPadding={{ top: insets.top, right: 0, bottom: 0, left: 0 }}
-      initialRegion={region}
-      region={ this.region }
-      // kmlSrc={PROVIDER_GOOGLE}
-      provider="google"
-      showsMyLocationButton={true}
-      showsUserLocation={true}
-      onRegionChange={onRegionChange}
+        style={{ width: '100%', height: '100%' }}
+        mapPadding={{ top: insets.top, right: 0, bottom: 0, left: 0 }}
+        initialRegion={region}
+        region={this.region}
+        // kmlSrc={PROVIDER_GOOGLE}
+        provider="google"
+        showsMyLocationButton={true}
+        showsUserLocation={true}
+        onRegionChange={onRegionChange}
       />
-      <Pressable style={{...styles.circleButton, right: '5%', bottom: '50%'}} onPress={() => setSettingsVisible(true)}>
-        <Ionicons name="settings-sharp" size={30}/>
+      <Pressable style={{ ...styles.circleButton, right: '5%', bottom: '50%' }} onPress={() => setSettingsVisible(true)}>
+        <Ionicons name="settings-sharp" size={30} />
       </Pressable>
-      <Pressable style={{...styles.circleButton, right: '5%', bottom: '40%'}} onPress={() => setModalVisible(true)}>
-        <Ionicons name="add-outline" size={30}/>
+      <Pressable style={{ ...styles.circleButton, right: '5%', bottom: '40%' }} onPress={() => setModalVisible(true)}>
+        <Ionicons name="add-outline" size={30} />
       </Pressable>
     </View>
   );
@@ -246,23 +246,25 @@ const DATA = [
 
 function CarpoolScreen() {
   const insets = useSafeAreaInsets();
-  
+
   return (
-    <View style={{ paddingTop: insets.top, justifyContent: 'center', alignItems: 'center', flex: 1}}>
-      <Text style={{textAlign: 'center', fontWeight: 'bold'}}> Active Carpool Rides:</Text>
+    <View style={{ paddingTop: insets.top, justifyContent: 'center', alignItems: 'center', flex: 1 }}>
+      <Text style={{ textAlign: 'center', fontWeight: 'bold' }}> Active Carpool Rides:</Text>
       <FlatList
         contentContainerStyle={styles.flatList}
         data={DATA}
-        renderItem={({item}) => <View style={
-          { borderRadius: 20,
-            marginVertical: 5, 
-            backgroundColor: 'lightpink', 
-            width: 350, 
-            height: 100, 
-            alignItems: 'left', 
-            justifyContent: 'center' }
-          } ><Text style={{textAlign: 'left', fontWeight:'bold'}}>{item.title}</Text></View>}
-          keyExtractor={item => item.id}
+        renderItem={({ item }) => <View style={
+          {
+            borderRadius: 20,
+            marginVertical: 5,
+            backgroundColor: 'lightpink',
+            width: 350,
+            height: 100,
+            alignItems: 'left',
+            justifyContent: 'center'
+          }
+        } ><Text style={{ textAlign: 'left', fontWeight: 'bold' }}>{item.title}</Text></View>}
+        keyExtractor={item => item.id}
       />
     </View>
   );
@@ -293,7 +295,7 @@ const styles = StyleSheet.create({
     marginVertical: 0,
     marginBottom: 10,
     alignContent: 'center',
-    width: '75%', 
+    width: '75%',
   },
   modals: {
     alignItems: 'center',
@@ -318,7 +320,7 @@ const styles = StyleSheet.create({
   modalText: {
     marginTop: 16,
     textAlign: 'center',
-    fontSize: 24, 
+    fontSize: 24,
     fontWeight: 'bold'
   },
 });
@@ -343,15 +345,15 @@ export default function App() {
   );
 }
 
-  // onRegionChange(region) {
-  //   this.setState({ region })
-  // }
+// onRegionChange(region) {
+//   this.setState({ region })
+// }
 
 
-  // let location = await Location.getCurrentPositionAsync();
-    // console.log(location);
-    // const { latitude1, longitude1 } = route.params || { latitude1: 0, longitude1: 0 }; // Default values if params are undefined
-    // let loc = requestLocation;
-    // const { latitude1, longitude1 } = route.params || { latitude1: 0, longitude1: 0 }; // Default values if params are undefined
-    // let loc = requestLocation;
+// let location = await Location.getCurrentPositionAsync();
+// console.log(location);
+// const { latitude1, longitude1 } = route.params || { latitude1: 0, longitude1: 0 }; // Default values if params are undefined
+// let loc = requestLocation;
+// const { latitude1, longitude1 } = route.params || { latitude1: 0, longitude1: 0 }; // Default values if params are undefined
+// let loc = requestLocation;
 
