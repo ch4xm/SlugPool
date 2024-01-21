@@ -125,21 +125,8 @@ function CarpoolScreen() {
       <FlatList
         contentContainerStyle={styles.flatList}
         data={DATA}
-<<<<<<< HEAD
         renderItem={({item}) => <View style={{marginVertical: 10, backgroundColor: 'lightpink', alignSelf: 'center', width: '100%', height: '50%', justifyContent: 'center', borderColor: 'black', borderRadius: 16, borderWidth: 2}}><Text style={{textAlign: 'left', fontWeight:'bold'}}>{item.title}</Text></View>}
         keyExtractor={item => item.id} 
-=======
-        renderItem={({item}) => <View style={
-          { borderRadius: 5,
-            marginVertical: 5, 
-            backgroundColor: 'gold', 
-            width: 350, 
-            height: 75, 
-            alignItems: 'center', 
-            justifyContent: 'center' }
-          } ><Text style={{textAlign: 'center'}}>{item.title}</Text></View>}
-          keyExtractor={item => item.id}
->>>>>>> 860c6ab25dc16b16eaea4a9bce6141ff83faf49b
       />
     </View>
   );
