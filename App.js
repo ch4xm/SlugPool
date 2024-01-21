@@ -5,7 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import  MapView, { Marker } from 'react-native-maps';
 import { Ionicons } from '@expo/vector-icons';
-import GetLocation from 'react-native-get-location'
+// import GetLocation from 'react-native-get-location'
 
 const Tab = createBottomTabNavigator();
 
@@ -49,13 +49,19 @@ const requestLocation = () => {
     });
 };
 
-
-
 function MapScreen() {
-  let loc = requestLocation;
+  // let loc = requestLocation;
   return (
-    <View >
-      <MapView style={{width: '100%', height: '100%'}} />
+    <View>
+      <MapView
+        style={{width: '100%', height: '100%'}}
+        // initialRegion={{
+          // latitude: loc.latitude,
+          // longitude: loc.longitude,
+          // latitudeDelta: 0.0922,
+          // longitudeDelta: 0.0421,
+        // }}
+      />
       <Pressable style={styles.circleButton}>
         <Text adjustsFontSizeToFit>+</Text>
       </Pressable>
@@ -102,8 +108,7 @@ function CarpoolScreen() {
   const insets = useSafeAreaInsets();
   
   return (
-    // <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-    <View style={{ paddingTop: insets.top, paddingBottom: 10, flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+    <View style={{ paddingTop: insets.top, flex: 1, justifyContent: 'center', alignItems: 'center'}}>
       <Text style={{textAlign: 'center'}}>Active Carpool Rides:</Text>
       <FlatList
         contentContainerStyle={styles.flatList}
@@ -121,14 +126,6 @@ function CarpoolScreen() {
         
           keyExtractor={item => item.id}
       />
-    </View>
-  );
-}
-
-function SettingsScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Settings!</Text>
     </View>
   );
 }
@@ -157,9 +154,19 @@ const styles = StyleSheet.create({
     bottom: '5%'
   },
   flatList: {
-    marginVertical: 10,
-    alignContent: 'flex-start',
+    // marginVertical: 0,
+    flex: 1,
+    alignContent: 'center',
     width: '75%', 
     height: '80%'
   }
 });
+
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      <BottomNavigator/>
+    </NavigationContainer>
+  );
+}
