@@ -1,10 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
-import { FlatList, Pressable, StyleSheet, Text, View, SafeAreaView } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MapView, { Marker} from 'react-native-maps';
 import { Ionicons } from '@expo/vector-icons';
-import GetLocation from 'react-native-get-location' 
+// import GetLocation from 'react-native-get-location'
 
 const Tab = createBottomTabNavigator();
 
@@ -17,22 +18,54 @@ function BottomNavigator() {
   )
 }
 
-export default function App() {
-  return (
-    <NavigationContainer>
-      <BottomNavigator/>
-    </NavigationContainer>
-  );
-}
+const requestLocation = () => {
+  setLoading(true);
+  setLocation(null);
+  setError(null);
+
+  GetLocation.getCurrentPosition({
+    enableHighAccuracy: true,
+    timeout: 30000,
+    rationale: {
+      title: 'Location permission',
+      message: 'The app needs the permission to request your location.',
+      buttonPositive: 'Ok',
+    },
+  })
+    .then(newLocation => {
+      setLoading(false);
+      setLocation(newLocation);
+    })
+    .catch(ex => {
+      if (isLocationError(ex)) {
+        const {code, message} = ex;
+        console.warn(code, message);
+        setError(code);
+      } else {
+        console.warn(ex);
+      }
+      setLoading(false);
+      setLocation(null);
+    });
+};
 
 function MapScreen() {
+  // let loc = requestLocation;
   return (
-    <>
-      <MapView style={styles.map} />
+    <View>
+      <MapView
+        style={{width: '100%', height: '100%'}}
+        // initialRegion={{
+          // latitude: loc.latitude,
+          // longitude: loc.longitude,
+          // latitudeDelta: 0.0922,
+          // longitudeDelta: 0.0421,
+        // }}
+      />
       <Pressable style={styles.circleButton}>
         <Text adjustsFontSizeToFit>+</Text>
       </Pressable>
-    </>
+    </View>
   );
 }
 
@@ -72,24 +105,17 @@ const DATA = [
 ];
 
 function CarpoolScreen() {
+  const insets = useSafeAreaInsets();
+  
   return (
-    // <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-    <SafeAreaView>
+    <View style={{ paddingTop: insets.top, flex: 1, justifyContent: 'center', alignItems: 'center'}}>
       <Text style={{textAlign: 'center'}}>Active Carpool Rides:</Text>
       <FlatList
-        contentContainerStyle={{flexDirection: 'column', alignSelf: 'center', width: '75%', height: '80%'}}
+        contentContainerStyle={styles.flatList}
         data={DATA}
         renderItem={({item}) => <View style={{marginVertical: 10, backgroundColor: 'lightpink', alignSelf: 'center', width: '100%', height: '50%', justifyContent: 'center', borderColor: 'black', borderRadius: 16, borderWidth: 2}}><Text style={{textAlign: 'left', fontWeight:'bold'}}>{item.title}</Text></View>}
         keyExtractor={item => item.id} 
       />
-    </SafeAreaView>
-  );
-}
-
-function SettingsScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Settings!</Text>
     </View>
   );
 }
@@ -100,13 +126,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  statusBar: {
-    
-  },
-  map: {
-    width: '100%',
-    height: '100%',
   },
   circleButton: {
     borderRadius: 100,
@@ -123,5 +142,21 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     right: '10%',
     bottom: '5%'
-},
+  },
+  flatList: {
+    // marginVertical: 0,
+    flex: 1,
+    alignContent: 'center',
+    width: '75%', 
+    height: '80%'
+  }
 });
+
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      <BottomNavigator/>
+    </NavigationContainer>
+  );
+}
