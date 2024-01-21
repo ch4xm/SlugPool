@@ -12,7 +12,17 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 import { useRoute } from '@react-navigation/native';
+import { initializeApp } from 'firebase/app';
+require('dotenv').config();
 
+const firebaseConfig = {
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: "slugpool-cruzhacks24.firebaseapp.com",
+  projectId: "slugpool-cruzhacks24",
+  storageBucket: "slugpool-cruzhacks24.appspot.com",
+  messagingSenderId: "1057846058539",
+  appId: "1:1057846058539:web:0c8ccc6e592fa1fe0fd46e"
+};
 
 
 
@@ -94,40 +104,66 @@ const requestLocation = () => {
   }
 };
 
-function MapScreen( { route } ) {
-  // const { latitude1, longitude1 } = route.params || { latitude1: 0, longitude1: 0 }; // Default values if params are undefined
-  // let loc = requestLocation;
+function MapScreen({ route }) {
+  const insets = useSafeAreaInsets();
+  const [location, setLocation] = useState(null);
+  const [region, setRegion] = useState({
+    latitude: 37.7749, // default values
+    longitude: -122.4194,
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0421,
+  });
+
+  useEffect(() => {
+    var intervalCount = 0;
+    const maxIterations = 5;
+
+    const fetchLocation = async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status === 'granted') {
+        let fetchedLocation = await Location.getCurrentPositionAsync();
+        setLocation(fetchedLocation.coords);
+        setRegion({
+          latitude: fetchedLocation.coords.latitude,
+          longitude: fetchedLocation.coords.longitude,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        });
+      }
+
+      intervalCount += 1;
+      if (intervalCount >= maxIterations) {
+        clearInterval(intervalId);
+      }
+    };
+
+    const intervalId = setInterval(fetchLocation, 500); // Fetch location every 2.5 seconds
+
+    return () => clearInterval(intervalId); // Cleanup interval on component unmount
+  }, []);
+
+  const onRegionChange = (region) => {
+    console. log ( region )
+  }
+
   return (
     <View>
       <MapView
         style={{width: '100%', height: '100%'}}
-        
-        initialRegion={{
-          // latitude: location.coords.latitude,
-          // longitude: location.coords.longitude,
-          latitude: 37.7749,
-          longitude: -122.4194,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}>
-      <Marker
-            coordinate={{latitude: 37.78825,
-            longitude: -122.4324}}
-            title={"title"}
-            description={"description"}
-         >
-        <Image source={require('./assets/marker-POC.png')} style={{height: 100, width: 35}}></Image>
-      </Marker>
-      </MapView>
-      <Pressable style={{...styles.circleButton, right: '7.5%', bottom: '17%'}}>
-        <Ionicons name="settings-sharp" size={27.5}/>
-      </Pressable>
-      <Pressable style={{...styles.circleButton, right: '7.5%', bottom: '5%'}}>
-        <Ionicons name="add-outline" size={27.5}/>
+        mapPadding={{ top: insets.top, right: 0, bottom: 0, left: 0 }}
+        initialRegion={region}
+        region={ this.region }
+        showsMyLocationButton={true}
+        showsUserLocation={true}
+        onRegionChange={onRegionChange}
+      />
+      <Pressable style={styles.circleButton}>
+        <Text adjustsFontSizeToFit>+</Text>
       </Pressable>
     </View>
   );
 }
+
 
 const DATA = [
   {
@@ -245,12 +281,24 @@ export default function App() {
         <Stack.Screen
           name="PermissionsRequester"
           component={PermissionsRequesterScreen}
-          options={{title: 'App needs location permission'}}
+          options={{ headerShown: false }}
         />
-        <Stack.Screen name="home" component={BottomNavigator} props />
+        <Stack.Screen name="home" component={BottomNavigator} options={{ headerShown: false }} />
 
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
+
+  // onRegionChange(region) {
+  //   this.setState({ region })
+  // }
+
+
+  // let location = await Location.getCurrentPositionAsync();
+    // console.log(location);
+    // const { latitude1, longitude1 } = route.params || { latitude1: 0, longitude1: 0 }; // Default values if params are undefined
+    // let loc = requestLocation;
+    // const { latitude1, longitude1 } = route.params || { latitude1: 0, longitude1: 0 }; // Default values if params are undefined
+    // let loc = requestLocation;
 
