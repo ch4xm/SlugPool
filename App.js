@@ -158,8 +158,11 @@ function MapScreen({ route }) {
         showsUserLocation={true}
         onRegionChange={onRegionChange}
       />
-      <Pressable style={styles.circleButton}>
-        <Text adjustsFontSizeToFit>+</Text>
+      <Pressable style={{...styles.circleButton, right: '5%', bottom: '50%'}}>
+        <Ionicons name="settings-sharp" size={30}/>
+      </Pressable>
+      <Pressable style={{...styles.circleButton, right: '5%', bottom: '40%'}}>
+        <Ionicons name="add-outline" size={30}/>
       </Pressable>
     </View>
   );
