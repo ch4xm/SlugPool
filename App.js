@@ -94,21 +94,58 @@ const requestLocation = () => {
   }
 };
 
-function MapScreen( { route } ) {
-  // const { latitude1, longitude1 } = route.params || { latitude1: 0, longitude1: 0 }; // Default values if params are undefined
-  // let loc = requestLocation;
+function MapScreen({ route }) {
+  const insets = useSafeAreaInsets();
+  const [location, setLocation] = useState(null);
+  const [region, setRegion] = useState({
+    latitude: 37.7749, // default values
+    longitude: -122.4194,
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0421,
+  });
+
+  useEffect(() => {
+    var intervalCount = 0;
+    const maxIterations = 5;
+
+    const fetchLocation = async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status === 'granted') {
+        let fetchedLocation = await Location.getCurrentPositionAsync();
+        setLocation(fetchedLocation.coords);
+        setRegion({
+          latitude: fetchedLocation.coords.latitude,
+          longitude: fetchedLocation.coords.longitude,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        });
+      }
+
+      intervalCount += 1;
+      if (intervalCount >= maxIterations) {
+        clearInterval(intervalId);
+      }
+    };
+
+    const intervalId = setInterval(fetchLocation, 500); // Fetch location every 2.5 seconds
+
+    return () => clearInterval(intervalId); // Cleanup interval on component unmount
+  }, []);
+
+  const onRegionChange = (region) => {
+    console. log ( region )
+  }
+
   return (
     <View>
       <MapView
         style={{width: '100%', height: '100%'}}
-        initialRegion={{
-          // latitude: location.coords.latitude,
-          // longitude: location.coords.longitude,
-          latitude: 37.7749,
-          longitude: -122.4194,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}
+        mapPadding={{ top: insets.top, right: 0, bottom: 0, left: 0 }}
+        initialRegion={region}
+        region={ this.region }
+        showsMyLocationButton={true}
+        showsUserLocation={true}
+        onRegionChange={onRegionChange}
       />
       <Pressable style={styles.circleButton}>
         <Text adjustsFontSizeToFit>+</Text>
@@ -116,6 +153,7 @@ function MapScreen( { route } ) {
     </View>
   );
 }
+
 
 const DATA = [
   {
@@ -235,12 +273,24 @@ export default function App() {
         <Stack.Screen
           name="PermissionsRequester"
           component={PermissionsRequesterScreen}
-          options={{title: 'App needs location permission'}}
+          options={{ headerShown: false }}
         />
-        <Stack.Screen name="home" component={BottomNavigator} props />
+        <Stack.Screen name="home" component={BottomNavigator} options={{ headerShown: false }} />
 
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
+
+  // onRegionChange(region) {
+  //   this.setState({ region })
+  // }
+
+
+  // let location = await Location.getCurrentPositionAsync();
+    // console.log(location);
+    // const { latitude1, longitude1 } = route.params || { latitude1: 0, longitude1: 0 }; // Default values if params are undefined
+    // let loc = requestLocation;
+    // const { latitude1, longitude1 } = route.params || { latitude1: 0, longitude1: 0 }; // Default values if params are undefined
+    // let loc = requestLocation;
 
