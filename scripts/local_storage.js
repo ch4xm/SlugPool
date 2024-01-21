@@ -30,9 +30,9 @@ export const addPassenger = (carpool_username, passenger) => {
     AsyncStorage.setItem(carpool_username, JSON.stringify(tmp));
 }
 
-export const removeCarpool = (username, cInfo) => {
-    if(AsyncStorage.getItem(username) != null && AsyncStorage.getItem(username).contactInfo == cInfo) {
-        AsyncStorage.removeItem(username);
+export const removeCarpool = async (username, cInfo) => {
+    if(await AsyncStorage.getItem(username) != null && await AsyncStorage.getItem(username).contactInfo == cInfo) {
+        await AsyncStorage.removeItem(username);
     }
 }
 

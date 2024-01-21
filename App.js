@@ -11,7 +11,13 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer, useRoute, useNavigation } from '@react-navigation/native';
-import {addCarpool, addPassenger, removeCarpool, removePassenger} from "./scripts/local_storage.js";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import { ScrollView } from 'react-native-gesture-handler';
+
+import { addCarpool } from './scripts/local_storage';
+import { removeCarpool } from './scripts/local_storage';
+
 
 
 const Tab = createBottomTabNavigator();
@@ -117,14 +123,15 @@ function MapScreen({ route }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [location, setLocation] = useState(null);
   const [region, setRegion] = useState({
-    latitude: 37.7749, // default values
-    longitude: -122.4194,
+    latitude: 36.99285817795091, // default values
+    longitude: -122.0601453639741,
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
   });
 
   const [markers, setMarkers] = useState([
-    { key: '1', coordinate: { latitude: 37.78825, longitude: -122.4324 } },
+    { key: '1', coordinate: { latitude: 36.997581997695235, longitude: -122.05199753503847 } },
+    { key: '2', coordinate: { latitude: 36.97509991759613, longitude: -122.05207727758082 } },
     // Add more markers as needed
   ]);
 
@@ -132,7 +139,7 @@ function MapScreen({ route }) {
   //   latitude: 37.78825,
   //   longitude: -122.4324,
   // });
-
+  
   // Function to add a new marker
   const addMarker = (newCoordinate) => {
     const newMarker = {
@@ -146,6 +153,7 @@ function MapScreen({ route }) {
   useEffect(() => {
     var intervalCount = 0;
     const maxIterations = 5;
+    
 
     const fetchLocation = async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
@@ -175,6 +183,16 @@ function MapScreen({ route }) {
     console.log(region)
   }
 
+  const [ Username, SetUsername ] = useState();
+  const [ ContactInfo, SetContactInfo ] = useState();
+  const [ Capacity, SetCapacity ] = useState();
+  const [ AvailableSeats, SetAvailableSeats ] = useState();
+  const [ Pickup, SetPickup ] = useState();
+  const [ Dropoff, SetDropoff ] = useState();
+  const [ CarModel, SetCarModel ] = useState();
+  const [ Date, SetDate ] = useState();
+  const [ Time, SetTime ] = useState();
+
   return (
     <View>
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'black' }}>
@@ -192,9 +210,9 @@ function MapScreen({ route }) {
               <Ionicons name="close-outline" size={30}></Ionicons>
             </Pressable>
             <Text style={styles.modalText}>Cancel your carpool offer</Text>
-            <TextInput style={styles.textBox} placeholder='Name' placeholderTextColor={'#808080'}></TextInput>
-            <TextInput style={styles.textBox} placeholder='Phone Number' placeholderTextColor={'#808080'}></TextInput>
-            <Pressable style={{backgroundColor: 'black', height: 50, width: 200, justifyContent: 'center', marginTop: 15, borderRadius: 10}} keyboardType='numeric' onPress={() => setSettingsVisible(!settingsVisible)}>
+            <TextInput onChangeText={ text => SetUsername( text ) }style={styles.textBox} placeholder='Name' placeholderTextColor={'#808080'}></TextInput>
+            <TextInput onChangeText={ text => SetContactInfo( text ) } style={styles.textBox} textContentType='emailAddress' placeholder='Contact Info' placeholderTextColor={'#808080'}></TextInput>
+            <Pressable style={{backgroundColor: 'black', height: 50, width: 200, justifyContent: 'center', marginTop: 15, borderRadius: 10}} keyboardType='numeric' onPress={() => {removeCarpool( Username, ContactInfo ); setSettingsVisible(!settingsVisible);}}>
               <Text style={{color: 'white', textAlign: 'center', fontSize: 24, fontWeight: 'bold'}}>Submit</Text>
             </Pressable>
           </View>
@@ -206,23 +224,25 @@ function MapScreen({ route }) {
           onRequestClose={() => {
             setModalVisible(!modalVisible);
           }}>
-          <View style={{ ...styles.modals, ...styles.shadow }}>
+          <ScrollView contentContainerStyle={{ ...styles.modals, ...styles.shadow }}>
             <Pressable
               style={{ ...styles.circleButton, shadowColor: 'transparent', top: 0, right: 0 }}
               onPress={() => setModalVisible(!modalVisible)}>
               <Ionicons name="close-outline" size={30}></Ionicons>
             </Pressable>
             <Text style={styles.modalText}>Offer a Ride</Text>
-            <TextInput style={styles.textBox} placeholder='Name' placeholderTextColor={'#808080'}></TextInput>
-            <TextInput style={styles.textBox} placeholder='Phone Number' placeholderTextColor={'#808080'}></TextInput>
-            <TextInput style={styles.textBox} placeholder='Carpool Seats Available' placeholderTextColor={'#808080'}></TextInput>
-            <TextInput style={styles.textBox} placeholder='Starting Point' placeholderTextColor={'#808080'}></TextInput>
-            <TextInput style={styles.textBox} placeholder='Destination' placeholderTextColor={'#808080'}></TextInput>
-            <TextInput style={styles.textBox} placeholder='Gas Price' placeholderTextColor={'#808080'}></TextInput>
-            <Pressable style={{backgroundColor: 'black', height: 50, width: 200, justifyContent: 'center', marginTop: 15, borderRadius: 10}} onPress={() => {setModalVisible(!modalVisible); console.log('submitted')}}>
+            <TextInput onChangeText={ text => SetUsername( text ) } style={styles.textBox} placeholder='Name' placeholderTextColor={'#808080'}></TextInput>
+            <TextInput onChangeText={ text => SetDate( text ) } style={styles.textBox} placeholder='Date' placeholderTextColor={'#808080'}></TextInput>
+            <TextInput onChangeText={ text => SetTime( text ) } style={styles.textBox} placeholder='Time' placeholderTextColor={'#808080'}></TextInput>
+            <TextInput onChangeText={ text => SetContactInfo( text ) } style={styles.textBox} placeholder='Phone Number' placeholderTextColor={'#808080'}></TextInput>
+            <TextInput onChangeText={ text => SetAvailableSeats( text ) }style={styles.textBox} placeholder='Carpool Seats Available' placeholderTextColor={'#808080'}></TextInput>
+            <TextInput onChangeText={ text => SetPickup( text ) } style={styles.textBox} placeholder='Starting Point' placeholderTextColor={'#808080'}></TextInput>
+            <TextInput onChangeText={ text => SetDropoff( text ) }style={styles.textBox} placeholder='Destination' placeholderTextColor={'#808080'}></TextInput>
+            <TextInput onChangeText={ text => SetCarModel( text ) } style={styles.textBox} placeholder='Car Make/Model' placeholderTextColor={'#808080'}></TextInput>
+            <Pressable style={{backgroundColor: 'black', height: 50, width: 200, justifyContent: 'center', marginTop: 15, borderRadius: 10}} onPress={() => { addCarpool([Username, Pickup, Dropoff, AvailableSeats, Date, Time, ContactInfo, CarModel, []]); setModalVisible(!modalVisible); console.log('submitted')}}>
               <Text style={{color: 'white', textAlign: 'center', fontSize: 24, fontWeight: 'bold'}}>Submit</Text>
             </Pressable>
-          </View>
+          </ScrollView>
         </Modal>
       </View>
       <MapView
@@ -323,12 +343,36 @@ const DATA = [
 function CarpoolScreen() {
   const insets = useSafeAreaInsets();
 
+  const [data, setData] = useState([]);
+
+  const loadData = async () => {
+    try {
+      const keys = await AsyncStorage.getAllKeys();
+      const items = await AsyncStorage.multiGet(keys);
+      const formattedData = items.map(item => ({ id: item[0], title: JSON.parse(item[1]) }));
+      setData(formattedData);
+    } catch (error) {
+      console.error('Error fetching data', error);
+    }
+  };
+
+  useEffect(() => {
+    loadData();
+
+    setInterval(() => { loadData(); }, 1500 );
+
+    // addCarpool(['username', 'pickup', 'dropoff', 'capacity', 'date', 'time', 'contactInfo', 'car', []]);
+    // removeCarpool('John Doe', 'contactInfo');
+    removeCarpool('Jay', '12345');
+    // AsyncStorage.clear()
+  }, []);
+
   return (
     <View style={{ paddingTop: insets.top, justifyContent: 'center', alignItems: 'center', flex: 1 }}>
       <Text style={{ textAlign: 'center', fontWeight: 'bold' }}> Active Carpool Rides:</Text>
       <FlatList
         contentContainerStyle={styles.flatList}
-        data={DATA}
+        data={data}
         renderItem={({ item }) => <View style={
           {
             borderRadius: 10,
@@ -340,7 +384,9 @@ function CarpoolScreen() {
             justifyContent: 'center',
             paddingVertical: 10
           }
-        } ><Text style={{ textAlign: 'left', fontWeight: 'bold', fontSize: 16}}>{item.title}</Text></View>}
+        } >
+            <Text style={{ textAlign: 'left', fontWeight: 'bold' }}>{`Driver Name: ${item.title.username}\nStarting From: ${item.title.pickup}\nHeading Towards: ${item.title.dropoff}\nSpace Available: ${item.title.capacity}\nContact: ${item.title.contactInfo}`}</Text>
+          </View>}
         keyExtractor={item => item.id}
       />
     </View>
@@ -405,7 +451,7 @@ const styles = StyleSheet.create({
   textBox: {
     borderWidth: 1,
     borderColor: 'black',
-    marginVertical: 12,
+    marginVertical: 8,
     width: '78%',
     height: 50,
     borderRadius: 10,
