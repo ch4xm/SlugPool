@@ -1,68 +1,111 @@
 import { StatusBar } from 'expo-status-bar';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import  MapView, { Marker } from 'react-native-maps';
 import { Ionicons } from '@expo/vector-icons';
-import GetLocation from 'react-native-get-location'
+// import GetLocation from 'react-native-get-location'
 import * as Location from 'expo-location';
-import { useState } from 'react';
-import { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';
+
+
+
 
 const Tab = createBottomTabNavigator();
 
 function BottomNavigator() {
+
   return (
     <Tab.Navigator>
-      <Tab.Screen name='Map' component={MapScreen} options={{ headerShown: false, tabBarLabel: "Home", tabBarIcon: ({ color, size }) => ( <Ionicons name="home" color={color} size={size} />), }}></Tab.Screen>
+      <Tab.Screen name='Map' component={MapScreen} options={{ headerShown: false, tabBarLabel: "Home", tabBarIcon: ({ color, size }) => ( <Ionicons name="home" color={color} size={size} /> ), }}></Tab.Screen>
       <Tab.Screen name='Carpool' component={CarpoolScreen} options={{ tabBarLabel: "Active Carpools", tabBarIcon: ({ color, size }) => ( <Ionicons name="car" color={color} size={size} />), }}></Tab.Screen>
     </Tab.Navigator>
   )
 }
 
-const requestLocation = () => {
-  setLoading(true);
-  setLocation(null);
-  setError(null);
+const PermissionsRequesterScreen = () => {
+  const navigation = useNavigation();
+  const route = useRoute();
 
-  GetLocation.getCurrentPosition({
-    enableHighAccuracy: true,
-    timeout: 30000,
-    rationale: {
-      title: 'Location permission',
-      message: 'The app needs the permission to request your location.',
-      buttonPositive: 'Ok',
-    },
-  })
-    .then(newLocation => {
-      setLoading(false);
-      setLocation(newLocation);
-    })
-    .catch(ex => {
-      if (isLocationError(ex)) {
-        const {code, message} = ex;
-        console.warn(code, message);
-        setError(code);
-      } else {
-        console.warn(ex);
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+
+  const requestLocation = async () => {
+    let { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== 'granted') {
+      setErrorMsg('Permission to access location was denied');
+      return;
+    }
+
+    let location = await Location.getCurrentPositionAsync({});
+    setLocation(location);
+    console.log("location: " + location.coords.latitude + ", " + location.coords.longitude);
+    navigation.navigate('home', { screen: 'Map', params: { latitude1: location.coords.latitude, longitude1: location.coords.longitude } });
+  };
+
+  let text = 'Waiting..';
+  if (errorMsg) {
+    text = errorMsg;
+  } else if (location) {
+    text = JSON.stringify(location);
+  }
+
+  return (
+    <View style={styles.container}>
+      <Text>Permissions Requester</Text>
+      <Text>Location: {text}</Text>
+      <Pressable onPress={requestLocation} style={styles.button}>
+        <Text>Request location</Text>
+      </Pressable>
+    </View>
+  );
+}
+
+const requestLocation = () => {
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+        return;
       }
-      setLoading(false);
-      setLocation(null);
-    });
+
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+      console.log( "location: " + location.coords.latitude + ", " + location.coords.longitude );
+    })();
+  }, []);
+
+  let text = 'Waiting..';
+  if (errorMsg) {
+    text = errorMsg;
+  } else if (location) {
+    text = JSON.stringify(location);
+    navigation.navigate('home', {latitude: location.coords.latitude, longitude: location.coords.longitude});
+  }
 };
 
-
-
-function MapScreen() {
+function MapScreen( { route } ) {
+  // const { latitude1, longitude1 } = route.params || { latitude1: 0, longitude1: 0 }; // Default values if params are undefined
   // let loc = requestLocation;
   return (
-    <View >
+    <View>
       <MapView
-        style={styles.map}
+        style={{width: '100%', height: '100%'}}
         initialRegion={{
-          latitude: loc.latitude,
-          longitude: loc.longitude,
+          // latitude: location.coords.latitude,
+          // longitude: location.coords.longitude,
+          latitude: 37.7749,
+          longitude: -122.4194,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
@@ -113,8 +156,7 @@ function CarpoolScreen() {
   const insets = useSafeAreaInsets();
   
   return (
-    // <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-    <View style={{ paddingTop: insets.top }}>
+    <View style={{ paddingTop: insets.top, flex: 1, justifyContent: 'center', alignItems: 'center'}}>
       <Text style={{textAlign: 'center'}}>Active Carpool Rides:</Text>
       <FlatList
         contentContainerStyle={styles.flatList}
@@ -140,27 +182,12 @@ function CarpoolScreen() {
   );
 }
 
-function SettingsScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Settings!</Text>
-    </View>
-  );
-}
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  statusBar: {
-    
-  },
-  map: {
-    width: '100%',
-    height: '100%',
   },
   circleButton: {
     borderRadius: 100,
@@ -177,38 +204,32 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     right: '10%',
     bottom: '5%'
-},
+  },
+  flatList: {
+    // marginVertical: 0,
+    flex: 1,
+    alignContent: 'center',
+    width: '75%', 
+    height: '80%'
+  }
 });
 
 
 export default function App() {
-  // const [location, setLocation] = useState(null);
-  // const [errorMsg, setErrorMsg] = useState(null);
+  const Stack = createStackNavigator();
 
-  // useEffect(() => {
-  //   (async () => {
-      
-  //     let { status } = await Location.requestForegroundPermissionsAsync();
-  //     if (status !== 'granted') {
-  //       setErrorMsg('Permission to access location was denied');
-  //       return;
-  //     }
-
-  //     let location = await Location.getCurrentPositionAsync({});
-  //     setLocation(location);
-  //   })();
-  // }, []);
-
-  // let text = 'Waiting..';
-  // if (errorMsg) {
-  //   text = errorMsg;
-  // } else if (location) {
-  //   text = JSON.stringify(location);
-  // }
 
   return (
     <NavigationContainer>
-      <BottomNavigator/>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="PermissionsRequester"
+          component={PermissionsRequesterScreen}
+          options={{title: 'App needs location permission'}}
+        />
+        <Stack.Screen name="home" component={BottomNavigator} props />
+
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }
