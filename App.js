@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
+import { FlatList, Pressable, StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MapView from 'react-native-maps';
@@ -10,7 +10,7 @@ const Tab = createBottomTabNavigator();
 function BottomNavigator() {
   return (
     <Tab.Navigator>
-      <Tab.Screen name='Map' component={MapScreen} options={{ tabBarLabel: "Home", tabBarIcon: ({ color, size }) => ( <Ionicons name="home" color={color} size={size} />), }}></Tab.Screen>
+      <Tab.Screen name='Map' component={MapScreen} options={{ headerShown: false, tabBarLabel: "Home", tabBarIcon: ({ color, size }) => ( <Ionicons name="home" color={color} size={size} />), }}></Tab.Screen>
       <Tab.Screen name='Carpool' component={CarpoolScreen} options={{ tabBarLabel: "Active Carpools", tabBarIcon: ({ color, size }) => ( <Ionicons name="car" color={color} size={size} />), }}></Tab.Screen>
     </Tab.Navigator>
   )
@@ -26,12 +26,12 @@ export default function App() {
 
 function MapScreen() {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <>
       <MapView style={styles.map} />
       <Pressable style={styles.circleButton}>
         <Text adjustsFontSizeToFit>+</Text>
       </Pressable>
-    </View>
+    </>
   );
 }
 
@@ -45,21 +45,43 @@ const DATA = [
     title: 'Second Item',
   },
   {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
+    id: '58694a0f3da1-471f-bd96-145571e29d72',
     title: 'Third Item',
+  },
+  {
+    id: '58694a0f-3da1-47f-bd96-145571e29d72',
+    title: 'Fourth Item',
+  },
+  {
+    id: '58694a0f-3da1-471fbd96-145571e29d72',
+    title: 'Fifth Item',
+  },
+  {
+    id: '58694a0f-3da1-471f-bd96-14551e29d72',
+    title: 'Sixth Item',
+  },
+  {
+    id: '58694a0f-3da1-471f-bd96-14557e29d72',
+    title: 'Seventh Item',
+  },
+  {
+    id: '58694a0f-3da1-471f-bd96145571e29d72',
+    title: 'Eighth Item',
   },
 ];
 
 function CarpoolScreen() {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    // <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <SafeAreaView>
+      <Text style={{textAlign: 'center'}}>Active Carpool Rides:</Text>
       <FlatList
-        contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}
+        contentContainerStyle={{flexDirection: 'column', alignSelf: 'center', width: '75%', height: '80%'}}
         data={DATA}
-        renderItem={({item}) => <View style={{justifyContent: 'center', alignItems: 'center', width: '50%', height: '10%', borderColor: 'black', borderWidth: 1}}><Text>{item.title}</Text></View>}
+        renderItem={({item}) => <View style={{marginVertical: 10, backgroundColor: 'gold', alignSelf: 'center', width: '90%', height: '45%', justifyContent: 'center', borderColor: 'black', borderWidth: 1}}><Text style={{textAlign: 'center'}}>{item.title}</Text></View>}
         keyExtractor={item => item.id}
       />
-    </View>
+    </SafeAreaView>
   );
 }
 
