@@ -193,7 +193,7 @@ function MapScreen({ route }) {
             </Pressable>
             <Text style={styles.modalText}>Cancel your carpool offer</Text>
             <TextInput style={styles.textBox} placeholder='Name' placeholderTextColor={'#808080'}></TextInput>
-            <TextInput style={styles.textBox} textContentType='emailAddress' placeholder='Email Address' placeholderTextColor={'#808080'}></TextInput>
+            <TextInput style={styles.textBox} placeholder='Phone Number' placeholderTextColor={'#808080'}></TextInput>
             <Pressable style={{backgroundColor: 'black', height: 50, width: 200, justifyContent: 'center', marginTop: 15, borderRadius: 10}} keyboardType='numeric' onPress={() => setSettingsVisible(!settingsVisible)}>
               <Text style={{color: 'white', textAlign: 'center', fontSize: 24, fontWeight: 'bold'}}>Submit</Text>
             </Pressable>
@@ -263,7 +263,7 @@ function MapScreen({ route }) {
       <Pressable style={{ ...styles.circleButton, right: '5%', bottom: '50%' }} onPress={() => setSettingsVisible(true)}>
         <Ionicons name="settings-sharp" size={30} />
       </Pressable>
-      <Pressable style={{ ...styles.circleButton, right: '5%', bottom: '40%' }} onPress={() => setModalVisible(true)}>
+      <Pressable style={{ ...styles.circleButton, right: '5%', bottom: '50%' }} onPress={() => setModalVisible(true)}>
         <Ionicons name="add-outline" size={30} />
       </Pressable>
     </View>
@@ -332,15 +332,16 @@ function CarpoolScreen() {
         data={DATA}
         renderItem={({ item }) => <View style={
           {
-            borderRadius: 20,
+            borderRadius: 10,
             marginVertical: 5,
-            backgroundColor: 'lightpink',
+            backgroundColor: 'gold',
             width: 350,
-            height: 100,
+            // height: 100,
             alignItems: 'left',
-            justifyContent: 'center'
+            justifyContent: 'center',
+            paddingVertical: 10
           }
-        } ><Text style={{ textAlign: 'left', fontWeight: 'bold' }}>{item.title}</Text></View>}
+        } ><Text style={{ textAlign: 'left', fontWeight: 'bold', fontSize: 16}}>{item.title}</Text></View>}
         keyExtractor={item => item.id}
       />
     </View>
