@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { FlatList, Pressable, StyleSheet, Text, View, Image } from 'react-native';
+import { FlatList, Pressable, StyleSheet, Text, View, Image, TouchableHighlight } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MapView, { Marker} from 'react-native-maps';
@@ -71,8 +71,11 @@ function MapScreen() {
         <Image source={require('./assets/marker-POC.png')} style={{height: 100, width: 35}}></Image>
       </Marker>
       </MapView>
-      <Pressable style={styles.circleButton}>
-        <Text adjustsFontSizeToFit>+</Text>
+      <Pressable style={{...styles.circleButton, right: '7.5%', bottom: '15%'}}>
+        <Ionicons name="settings-sharp" size={30}/>
+      </Pressable>
+      <Pressable style={{...styles.circleButton, right: '7.5%', bottom: '5%'}}>
+        <Ionicons name="add-outline" size={30}/>
       </Pressable>
     </View>
   );
@@ -116,7 +119,7 @@ const DATA = [
     title: 'Driver Name: \n\n Starting From: \t Coming From: \n Space Available: \t Price: ',
   },
   {
-    id: '58694a0f-3da1-471f-bd96145571e29d72',
+    id: '58694a0f-3da1-471f-bdd96145571e29d72',
     title: 'Driver Name: \n\n Starting From: \t Coming From: \n Space Available: \t Price: ',
   },
   {
@@ -164,13 +167,11 @@ const styles = StyleSheet.create({
     color: 'white',
     alignItems: 'center',
     shadowColor: 'black',
-    shadowOpacity: '75%',
-    shadowRadius: 2.5,
+    shadowOpacity: '90%',
+    shadowRadius: 3,
     shadowOffset: 20,
     position: 'absolute',
     justifyContent: 'center',
-    right: '10%',
-    bottom: '5%'
   },
   flatList: {
     marginVertical: 0,
