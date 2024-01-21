@@ -72,47 +72,47 @@ function MapScreen() {
 const DATA = [
   {
     id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: '\t\tDriver Name:\n \n Starting From: \t \tComing From: \n\n Space Available: \t Price: ',
+    title: 'Driver Name: \n\n Starting From: \t Coming From: \n Space Available: \t Price: ',
   },
   {
     id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: 'Driver Name: \n Starting From: \t Coming From: \n Space Available: \t Price: ',
+    title: 'Driver Name: \n\n Starting From: \t Coming From: \n Space Available: \t Price: ',
   },
   {
     id: '58694a0f3da1-471f-bd96-145571e29d72',
-    title: 'Driver Name: \n Starting From: \t Coming From: \n Space Available: \t Price: ',
+    title: 'Driver Name: \n\n Starting From: \t Coming From: \n Space Available: \t Price: ',
   },
   {
     id: '58694a0f-3da1-47f-bd96-145571e29d72',
-    title: 'Driver Name: \n Starting From: \t Coming From: \n Space Available: \t Price: ',
+    title: 'Driver Name: \n\n Starting From: \t Coming From: \n Space Available: \t Price: ',
   },
   {
     id: '58694a0f-3da1-471fbd96-145571e29d72',
-    title: 'Driver Name: \n Starting From: \t Coming From: \n Space Available: \t Price: ',
+    title: 'Driver Name: \n\n Starting From: \t Coming From: \n Space Available: \t Price: ',
   },
   {
     id: '58694a0f-3da1-471f-bd96-14551e29d72',
-    title: 'Driver Name: \n Starting From: \t Coming From: \n Space Available: \t Price: ',
+    title: 'Driver Name: \n\n Starting From: \t Coming From: \n Space Available: \t Price: ',
   },
   {
     id: '58694a0f-3da1-471f-bd96-14557e29d72',
-    title: 'Driver Name: \n Starting From: \t Coming From: \n Space Available: \t Price: ',
+    title: 'Driver Name: \n\n Starting From: \t Coming From: \n Space Available: \t Price: ',
   },
   {
     id: '58694a0f-3da1-471f-bd96145571e29d72',
-    title: 'Driver Name: \n Starting From: \t Coming From: \n Space Available: \t Price: ',
+    title: 'Driver Name: \n\n Starting From: \t Coming From: \n Space Available: \t Price: ',
   },
   {
     id: '586d94a0f-3da1-471f-bd96145571e29d72',
-    title: 'Ninth Item',
+    title: 'Driver Name: \n\n Starting From: \t Coming From: \n Space Available: \t Price: ',
   },
   {
     id: '58694a0f-3da1-471f-bd96145571e29d72',
-    title: 'Tenth Item',
+    title: 'Driver Name: \n\n Starting From: \t Coming From: \n Space Available: \t Price: ',
   },
   {
     id: '58694aa0f-3da1-471f-bd96145571e29d72',
-    title: 'Eleventh Item',
+    title: 'Driver Name: \n\n Starting From: \t Coming From: \n Space Available: \t Price: ',
   },
 ];
 
@@ -121,12 +121,20 @@ function CarpoolScreen() {
   
   return (
     <View style={{ paddingTop: insets.top, justifyContent: 'center', alignItems: 'center', flex: 1}}>
-      <Text style={{textAlign: 'center'}}>Active Carpool Rides:</Text>
+      <Text style={{textAlign: 'center', fontWeight: 'bold'}}> Active Carpool Rides:</Text>
       <FlatList
         contentContainerStyle={styles.flatList}
         data={DATA}
-        renderItem={({item}) => <View style={{marginVertical: 10, backgroundColor: 'lightpink', alignSelf: 'center', width: '100%', height: '50%', justifyContent: 'center', borderColor: 'black', borderRadius: 16, borderWidth: 2}}><Text style={{textAlign: 'left', fontWeight:'bold'}}>{item.title}</Text></View>}
-        keyExtractor={item => item.id} 
+        renderItem={({item}) => <View style={
+          { borderRadius: 5,
+            marginVertical: 5, 
+            backgroundColor: 'lightpink', 
+            width: 350, 
+            height: 100, 
+            alignItems: 'center', 
+            justifyContent: 'center' }
+          } ><Text style={{textAlign: 'center', fontStyle: 'italic'}}>{item.title}</Text></View>}
+          keyExtractor={item => item.id}
       />
     </View>
   );
