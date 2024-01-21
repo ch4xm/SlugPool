@@ -123,14 +123,15 @@ function MapScreen({ route }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [location, setLocation] = useState(null);
   const [region, setRegion] = useState({
-    latitude: 37.7749, // default values
-    longitude: -122.4194,
+    latitude: 36.99285817795091, // default values
+    longitude: -122.0601453639741,
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
   });
 
   const [markers, setMarkers] = useState([
-    { key: '1', coordinate: { latitude: 37.78825, longitude: -122.4324 } },
+    { key: '1', coordinate: { latitude: 36.997581997695235, longitude: -122.05199753503847 } },
+    { key: '2', coordinate: { latitude: 36.97509991759613, longitude: -122.05207727758082 } },
     // Add more markers as needed
   ]);
 
@@ -138,7 +139,7 @@ function MapScreen({ route }) {
   //   latitude: 37.78825,
   //   longitude: -122.4324,
   // });
-
+  
   // Function to add a new marker
   const addMarker = (newCoordinate) => {
     const newMarker = {
