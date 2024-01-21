@@ -156,6 +156,9 @@ function MapScreen({ route }) {
             <Text style={styles.modalText}>Cancel your carpool offer</Text>
             <TextInput style={styles.textBox} placeholder='Name' placeholderTextColor={'#808080'}></TextInput>
             <TextInput style={styles.textBox} placeholder='Email Address' placeholderTextColor={'#808080'}></TextInput>
+            <Pressable style={{backgroundColor: 'black', height: 50, width: 200, justifyContent: 'center', marginTop: 15, borderRadius: 10}}>
+              <Text style={{color: 'white', textAlign: 'center', fontSize: 24, fontWeight: 'bold'}}>Submit</Text>
+            </Pressable>
           </View>
         </Modal>
         <Modal
@@ -171,7 +174,7 @@ function MapScreen({ route }) {
               onPress={() => setModalVisible(!modalVisible)}>
               <Ionicons name="close-outline" size={30}></Ionicons>
             </Pressable>
-            <Text style={styles.modalText}>Coordinate a Ride</Text>
+            <Text style={styles.modalText}>Offer a Ride</Text>
             <TextInput style={styles.textBox} placeholder='Name' placeholderTextColor={'#808080'}></TextInput>
             <TextInput style={styles.textBox} placeholder='Email Address' placeholderTextColor={'#808080'}></TextInput>
             <TextInput style={styles.textBox} placeholder='Carpool Seats Available' placeholderTextColor={'#808080'}></TextInput>
@@ -340,7 +343,6 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
   }
 });
-
 
 export default function App() {
   const Stack = createStackNavigator();
