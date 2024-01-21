@@ -172,9 +172,9 @@ function MapScreen({ route }) {
     return () => clearInterval(intervalId); // Cleanup interval on component unmount
   }, []);
 
-  const onRegionChange = (region) => {
-    console.log(region)
-  }
+  // const onRegionChange = (region) => {
+    // console.log(region)
+  // }
 
   return (
     <View>
