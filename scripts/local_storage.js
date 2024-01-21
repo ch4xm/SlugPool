@@ -1,19 +1,19 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export const addCarpool = (uname, pickup, dropoff, cap, date, time, contact, car) => {
+export const addCarpool = (value) => {
     //username, pickup place, dropoff place, capacity, date, time, contact info, car description
     const data = {
-        username: uname,
-        pickup: pickup,
-        dropoff: dropoff,
-        capacity: cap,
-        date: date,
-        time: time,
-        contactInfo: contact,
-        car: car,
-        passengerArr: []
+        username: value[0],
+        pickup: value[1],
+        dropoff: value[2],
+        capacity: value[3],
+        date: value[4],
+        time: value[5],
+        contactInfo: value[6],
+        car: value[7],
+        passengerArr: value[8]
     }
-    AsyncStorage.setItem(uname, JSON.stringify(data));
+    AsyncStorage.setItem(value[0], JSON.stringify(data));
 }
 
 export const addPassenger = (carpool_username, passenger) => {
