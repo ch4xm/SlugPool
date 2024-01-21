@@ -133,9 +133,9 @@ function MapScreen({ route }) {
     return () => clearInterval(intervalId); // Cleanup interval on component unmount
   }, []);
 
-  const onRegionChange = (region) => {
-    console.log(region)
-  }
+  // const onRegionChange = (region) => {
+    // console.log(region)
+  // }
 
   return (
     <View>
@@ -196,7 +196,7 @@ function MapScreen({ route }) {
         provider="google"
         showsMyLocationButton={true}
         showsUserLocation={true}
-        onRegionChange={onRegionChange}
+        // onRegionChange={onRegionChange}
       />
       <Pressable style={{ ...styles.circleButton, right: '5%', bottom: '40%' }} onPress={() => setSettingsVisible(true)}>
         <Ionicons name="remove-outline" size={30} />
