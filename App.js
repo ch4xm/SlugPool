@@ -1,8 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { FlatList, Pressable, StyleSheet, Text, View, Image, TouchableHighlight, Modal } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { FlatList, Pressable, StyleSheet, Text, View, Image, TouchableHighlight, Modal, TextInput } from 'react-native';
 import MapView, { Marker} from 'react-native-maps';
 import { Ionicons } from '@expo/vector-icons';
 // import GetLocation from 'react-native-get-location'
@@ -156,9 +154,8 @@ function MapScreen({ route }) {
               <Ionicons name="close-outline" size={30}></Ionicons>
             </Pressable>
             <Text style={styles.modalText}>Cancel your carpool offer</Text>
-            <TextInput style={styles.textBox}></TextInput>
-            <TextInput style={styles.textBox}></TextInput>
-            <TextInput style={styles.textBox}></TextInput>
+            <TextInput style={styles.textBox} placeholder='Name' placeholderTextColor={'#808080'}></TextInput>
+            <TextInput style={styles.textBox} placeholder='Email Address' placeholderTextColor={'#808080'}></TextInput>
           </View>
         </Modal>
         <Modal
@@ -175,6 +172,12 @@ function MapScreen({ route }) {
               <Ionicons name="close-outline" size={30}></Ionicons>
             </Pressable>
             <Text style={styles.modalText}>Coordinate a Ride</Text>
+            <TextInput style={styles.textBox} placeholder='Name' placeholderTextColor={'#808080'}></TextInput>
+            <TextInput style={styles.textBox} placeholder='Email Address' placeholderTextColor={'#808080'}></TextInput>
+            <TextInput style={styles.textBox} placeholder='Carpool Seats Available' placeholderTextColor={'#808080'}></TextInput>
+            <Pressable style={{backgroundColor: 'black', height: 50, width: 200, justifyContent: 'center', marginTop: 15, borderRadius: 10}}>
+              <Text style={{color: 'white', textAlign: 'center', fontSize: 24, fontWeight: 'bold'}}>Submit</Text>
+            </Pressable>
           </View>
         </Modal>
       </View>
@@ -301,9 +304,10 @@ const styles = StyleSheet.create({
   modals: {
     alignItems: 'center',
     width: '90%',
+    paddingVertical: '10%',
     borderRadius: 10,
     backgroundColor: 'white',
-    height: '70%',
+    // height: '70%',
     textAlign: 'center',
     elevation: 5,
     alignSelf: 'center',
@@ -319,7 +323,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
   },
   modalText: {
-    marginTop: 50,
+    marginTop: 10,
     marginBottom: 20,
     textAlign: 'center',
     fontSize: 24, 
@@ -328,9 +332,12 @@ const styles = StyleSheet.create({
   textBox: {
     borderWidth: 1,
     borderColor: 'black',
-    marginVertical: 10,
-    width: '65%',
-    height: '7.5%'
+    marginVertical: 12,
+    width: '78%',
+    height: 50,
+    borderRadius: 10,
+    fontSize: 18,
+    paddingLeft: 10,
   }
 });
 
