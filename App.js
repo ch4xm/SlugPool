@@ -255,7 +255,7 @@ function MapScreen({ route }) {
         showsMyLocationButton={true}
         showsUserLocation={true}
         onRegionChange={onRegionChange}>
-        {...markers.map((marker) => (
+        {markers.map((marker) => (
         <Marker
           key={marker.key}
           coordinate={marker.coordinate}
@@ -279,8 +279,8 @@ function MapScreen({ route }) {
       > 
       </Marker> */}
 
-      <Pressable style={{ ...styles.circleButton, right: '5%', bottom: '50%' }} onPress={() => setSettingsVisible(true)}>
-        <Ionicons name="settings-sharp" size={30} />
+      <Pressable style={{ ...styles.circleButton, right: '5%', bottom: '40%' }} onPress={() => setSettingsVisible(true)}>
+        <Ionicons name="remove-outline" size={30} />
       </Pressable>
       <Pressable style={{ ...styles.circleButton, right: '5%', bottom: '50%' }} onPress={() => setModalVisible(true)}>
         <Ionicons name="add-outline" size={30} />
@@ -288,57 +288,6 @@ function MapScreen({ route }) {
     </View>
   );
 }
-
-function submitRide(name, seats, start, destination, price) {
-
-}
-
-const DATA = [
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: '\tDriver Name: \n \tStarting From: \n \tComing From: \n \tSpace Available: \n \tPrice: ',
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: '\tDriver Name: \n \tStarting From: \n \tComing From: \n \tSpace Available: \n \tPrice: ',
-  },
-  {
-    id: '58694a0f3da1-471f-bd96-145571e29d72',
-    title: '\tDriver Name: \n \tStarting From: \n \tComing From: \n \tSpace Available: \n \tPrice: ',
-  },
-  {
-    id: '58694a0f-3da1-47f-bd96-145571e29d72',
-    title: '\tDriver Name: \n \tStarting From: \n \tComing From: \n \tSpace Available: \n \tPrice: ',
-  },
-  {
-    id: '58694a0f-3da1-471fbd96-145571e29d72',
-    title: '\tDriver Name: \n \tStarting From: \n \tComing From: \n \tSpace Available: \n \tPrice: ',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-14551e29d72',
-    title: '\tDriver Name: \n \tStarting From: \n \tComing From: \n \tSpace Available: \n \tPrice: ',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-14557e29d72',
-    title: '\tDriver Name: \n \tStarting From: \n \tComing From: \n \tSpace Available: \n \tPrice: ',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96145571e29d72',
-    title: '\tDriver Name: \n \tStarting From: \n \tComing From: \n \tSpace Available: \n \tPrice: ',
-  },
-  {
-    id: '586d94a0f-3da1-471f-bd96145571e29d72',
-    title: '\tDriver Name: \n \tStarting From: \n \tComing From: \n \tSpace Available: \n \tPrice: ',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96145571e29d72',
-    title: '\tDriver Name: \n \tStarting From: \n \tComing From: \n \tSpace Available: \n \tPrice: ',
-  },
-  {
-    id: '58694aa0f-3da1-471f-bd96145571e29d72',
-    title: '\tDriver Name: \n \tStarting From: \n \tComing From: \n \tSpace Available: \n \tPrice: ',
-  },
-];
 
 function CarpoolScreen() {
   const insets = useSafeAreaInsets();
@@ -369,7 +318,7 @@ function CarpoolScreen() {
 
   return (
     <View style={{ paddingTop: insets.top, justifyContent: 'center', alignItems: 'center', flex: 1 }}>
-      <Text style={{ textAlign: 'center', fontWeight: 'bold' }}> Active Carpool Rides:</Text>
+      <Text style={{ textAlign: 'center', fontWeight: 'bold'}}> Active Carpool Rides:</Text>
       <FlatList
         contentContainerStyle={styles.flatList}
         data={data}
@@ -382,10 +331,10 @@ function CarpoolScreen() {
             // height: 100,
             alignItems: 'left',
             justifyContent: 'center',
-            paddingVertical: 10
+            padding: 15
           }
         } >
-            <Text style={{ textAlign: 'left', fontWeight: 'bold' }}>{`Driver Name: ${item.title.username}\nStarting From: ${item.title.pickup}\nHeading Towards: ${item.title.dropoff}\nSpace Available: ${item.title.capacity}\nContact: ${item.title.contactInfo}`}</Text>
+            <Text style={{ textAlign: 'left', fontWeight: 'bold', fontSize: 16 }}>{`Driver Name: ${item.title.username}\nStarting From: ${item.title.pickup}\nHeading Towards: ${item.title.dropoff}\nSpace Available: ${item.title.capacity}\nContact: ${item.title.contactInfo}`}</Text>
           </View>}
         keyExtractor={item => item.id}
       />
