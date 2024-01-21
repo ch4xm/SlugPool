@@ -93,6 +93,24 @@ const requestLocation = () => {
   }
 };
 
+// const Map = () => {
+//   const [pin, setPin] = useState({
+//     latitude: 37.78825,
+//     longitude: -122.4324,
+//   });
+
+//   return (
+//     <MapView>
+//       <Marker
+//         draggable
+//         coordinate={pin}
+//         onDragEnd={e => {
+//           setPin(e.nativeEvent.coordinate);
+//         }} />
+//     </MapView>
+//   );
+// };
+
 function MapScreen({ route }) {
   const insets = useSafeAreaInsets();
   const [settingsVisible, setSettingsVisible] = useState(false);
@@ -104,6 +122,26 @@ function MapScreen({ route }) {
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
   });
+
+  const [markers, setMarkers] = useState([
+    { key: '1', coordinate: { latitude: 37.78825, longitude: -122.4324 } },
+    // Add more markers as needed
+  ]);
+
+  // const [markerPosition, setMarkerPosition] = useState({
+  //   latitude: 37.78825,
+  //   longitude: -122.4324,
+  // });
+
+  // Function to add a new marker
+  const addMarker = (newCoordinate) => {
+    const newMarker = {
+      key: markers.length.toString(), // Assign a unique key
+      coordinate: newCoordinate,
+    };
+
+    setMarkers([...markers, newMarker]);
+  };
 
   useEffect(() => {
     var intervalCount = 0;
@@ -178,7 +216,6 @@ function MapScreen({ route }) {
             <TextInput style={styles.textBox} placeholder='Name' placeholderTextColor={'#808080'}></TextInput>
             <TextInput style={styles.textBox} placeholder='Phone Number' placeholderTextColor={'#808080'}></TextInput>
             <TextInput style={styles.textBox} placeholder='Carpool Seats Available' placeholderTextColor={'#808080'}></TextInput>
-            <TextInput style={styles.textBox} placeholder='Carpool Seats Available' placeholderTextColor={'#808080'}></TextInput>
             <TextInput style={styles.textBox} placeholder='Starting Point' placeholderTextColor={'#808080'}></TextInput>
             <TextInput style={styles.textBox} placeholder='Destination' placeholderTextColor={'#808080'}></TextInput>
             <TextInput style={styles.textBox} placeholder='Gas Price' placeholderTextColor={'#808080'}></TextInput>
@@ -198,7 +235,31 @@ function MapScreen({ route }) {
         showsMyLocationButton={true}
         showsUserLocation={true}
         onRegionChange={onRegionChange}
-      />
+      >
+        {markers.map((marker) => (
+        <Marker
+          key={marker.key}
+          coordinate={marker.coordinate}
+          draggable
+          onDragEnd={(e) => {
+            const updatedMarkers = markers.map((m) =>
+              m.key === marker.key ? { ...m, coordinate: e.nativeEvent.coordinate } : m
+            );
+            setMarkers(updatedMarkers);
+          }}
+        >
+          <Image source={require('./assets/marker.png')} style={{ width: 75, height: 75 }} />
+        </Marker>
+      ))}
+      </MapView>
+      {/* <Marker
+        
+        coordinate={markerPosition}
+        draggable
+        onDragEnd={(e) => setMarkerPosition(e.nativeEvent.coordinate)}
+      > 
+      </Marker> */}
+
       <Pressable style={{ ...styles.circleButton, right: '5%', bottom: '50%' }} onPress={() => setSettingsVisible(true)}>
         <Ionicons name="settings-sharp" size={30} />
       </Pressable>
