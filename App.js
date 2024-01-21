@@ -1,11 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { FlatList, Pressable, StyleSheet, Text, View, Image, TouchableHighlight } from 'react-native';
+import { FlatList, Pressable, StyleSheet, Text, View, Image, TouchableHighlight, Modal } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MapView, { Marker} from 'react-native-maps';
 import { Ionicons } from '@expo/vector-icons';
-<<<<<<< HEAD
 // import GetLocation from 'react-native-get-location'
 import * as Location from 'expo-location';
 import React, { useState, useEffect } from 'react';
@@ -25,11 +24,9 @@ const firebaseConfig = {
 };
 
 
-=======
 // import {Transitioning, Transition} from 'react-native-reanimated';
 // import GetLocation from 'react-native-get-location';
 // import React, {useRef} from 'react';
->>>>>>> bc02c94 (yep)
 
 const Tab = createBottomTabNavigator();
 
@@ -111,6 +108,8 @@ const requestLocation = () => {
 
 function MapScreen({ route }) {
   const insets = useSafeAreaInsets();
+  const [settingsVisible, setSettingsVisible] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
   const [location, setLocation] = useState(null);
   const [region, setRegion] = useState({
     latitude: 37.7749, // default values
@@ -153,21 +152,55 @@ function MapScreen({ route }) {
 
   return (
     <View>
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'black'}}>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={settingsVisible}
+          onRequestClose={() => {
+            setSettingsVisible(!settingsVisible);
+        }}>            
+          <View style={styles.modals}>
+            <Pressable
+              style={{...styles.circleButton, shadowColor: 'transparent', top: 0, right: 0}}
+              onPress={() => setSettingsVisible(!settingsVisible)}>
+              <Ionicons name="close-outline" size={30}></Ionicons>
+            </Pressable>
+            <Text style={styles.modalText}>Hello World!</Text>
+          </View>
+        </Modal>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            setModalVisible(!modalVisible);
+        }}>
+          <View style={{...styles.modals, ...styles.shadow}}>
+            <Pressable
+              style={{...styles.circleButton, shadowColor: 'transparent', top: 0, right: 0}}
+              onPress={() => setModalVisible(!modalVisible)}>
+              <Ionicons name="close-outline" size={30}></Ionicons>
+            </Pressable>
+            <Text style={styles.modalText}>Coordinate a Ride</Text>
+          </View>
+        </Modal>
+      </View>
       <MapView
-        style={{width: '100%', height: '100%'}}
-        mapPadding={{ top: insets.top, right: 0, bottom: 0, left: 0 }}
-        initialRegion={region}
-        region={ this.region }
-        // kmlSrc={PROVIDER_GOOGLE}
-        provider="google"
-        showsMyLocationButton={true}
-        showsUserLocation={true}
-        onRegionChange={onRegionChange}
+      style={{width: '100%', height: '100%'}}
+      mapPadding={{ top: insets.top, right: 0, bottom: 0, left: 0 }}
+      initialRegion={region}
+      region={ this.region }
+      // kmlSrc={PROVIDER_GOOGLE}
+      provider="google"
+      showsMyLocationButton={true}
+      showsUserLocation={true}
+      onRegionChange={onRegionChange}
       />
-      <Pressable style={{...styles.circleButton, right: '5%', bottom: '50%'}}>
+      <Pressable style={{...styles.circleButton, right: '5%', bottom: '50%'}} onPress={() => setSettingsVisible(true)}>
         <Ionicons name="settings-sharp" size={30}/>
       </Pressable>
-      <Pressable style={{...styles.circleButton, right: '5%', bottom: '40%'}}>
+      <Pressable style={{...styles.circleButton, right: '5%', bottom: '40%'}} onPress={() => setModalVisible(true)}>
         <Ionicons name="add-outline" size={30}/>
       </Pressable>
     </View>
@@ -213,13 +246,8 @@ const DATA = [
     title: '\tDriver Name: \n \tStarting From: \n \tComing From: \n \tSpace Available: \n \tPrice: ',
   },
   {
-<<<<<<< HEAD
-    id: '58694a0f-3da1-471f-bdd96145571e29d72',
-    title: 'Driver Name: \n\n Starting From: \t Coming From: \n Space Available: \t Price: ',
-=======
     id: '58694a0f-3da1-471f-bd96145571e29d72',
     title: '\tDriver Name: \n \tStarting From: \n \tComing From: \n \tSpace Available: \n \tPrice: ',
->>>>>>> bc02c94 (yep)
   },
   {
     id: '58694aa0f-3da1-471f-bd96145571e29d72',
@@ -244,16 +272,7 @@ function CarpoolScreen() {
             height: 100, 
             alignItems: 'left', 
             justifyContent: 'center' }
-<<<<<<< HEAD
-          } >
-            
-          <Text style={{textAlign: 'center'}}>{item.title}</Text>
-          
-          </View>}
-        
-=======
           } ><Text style={{textAlign: 'left', fontWeight:'bold'}}>{item.title}</Text></View>}
->>>>>>> bc02c94 (yep)
           keyExtractor={item => item.id}
       />
     </View>
@@ -286,7 +305,33 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     alignContent: 'center',
     width: '75%', 
-  }
+  },
+  modals: {
+    alignItems: 'center',
+    width: '90%',
+    borderRadius: 10,
+    backgroundColor: 'white',
+    height: '70%',
+    textAlign: 'center',
+    elevation: 5,
+    alignSelf: 'center',
+    top: '10%',
+  },
+  shadow: {
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+  },
+  modalText: {
+    marginTop: 16,
+    textAlign: 'center',
+    fontSize: 24, 
+    fontWeight: 'bold'
+  },
 });
 
 
