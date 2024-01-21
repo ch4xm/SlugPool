@@ -6,62 +6,109 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MapView, { Marker} from 'react-native-maps';
 import { Ionicons } from '@expo/vector-icons';
 // import GetLocation from 'react-native-get-location'
+import * as Location from 'expo-location';
+import React, { useState, useEffect } from 'react';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { createStackNavigator } from '@react-navigation/stack';
+import { useNavigation } from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';
+
+
+
 
 const Tab = createBottomTabNavigator();
 
 function BottomNavigator() {
+
   return (
     <Tab.Navigator>
-      <Tab.Screen name='Map' component={MapScreen} options={{ headerShown: false, tabBarLabel: "Home", tabBarIcon: ({ color, size }) => ( <Ionicons name="home" color={color} size={size} />), }}></Tab.Screen>
+      <Tab.Screen name='Map' component={MapScreen} options={{ headerShown: false, tabBarLabel: "Home", tabBarIcon: ({ color, size }) => ( <Ionicons name="home" color={color} size={size} /> ), }}></Tab.Screen>
       <Tab.Screen name='Carpool' component={CarpoolScreen} options={{ tabBarLabel: "Active Carpools", tabBarIcon: ({ color, size }) => ( <Ionicons name="car" color={color} size={size} />), }}></Tab.Screen>
     </Tab.Navigator>
   )
 }
 
-const requestLocation = () => {
-  setLoading(true);
-  setLocation(null);
-  setError(null);
+const PermissionsRequesterScreen = () => {
+  const navigation = useNavigation();
+  const route = useRoute();
 
-  GetLocation.getCurrentPosition({
-    enableHighAccuracy: true,
-    timeout: 30000,
-    rationale: {
-      title: 'Location permission',
-      message: 'The app needs the permission to request your location.',
-      buttonPositive: 'Ok',
-    },
-  })
-    .then(newLocation => {
-      setLoading(false);
-      setLocation(newLocation);
-    })
-    .catch(ex => {
-      if (isLocationError(ex)) {
-        const {code, message} = ex;
-        console.warn(code, message);
-        setError(code);
-      } else {
-        console.warn(ex);
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+
+  const requestLocation = async () => {
+    let { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== 'granted') {
+      setErrorMsg('Permission to access location was denied');
+      return;
+    }
+
+    let location = await Location.getCurrentPositionAsync({});
+    setLocation(location);
+    console.log("location: " + location.coords.latitude + ", " + location.coords.longitude);
+    navigation.navigate('home', { screen: 'Map', params: { latitude1: location.coords.latitude, longitude1: location.coords.longitude } });
+  };
+
+  let text = 'Waiting..';
+  if (errorMsg) {
+    text = errorMsg;
+  } else if (location) {
+    text = JSON.stringify(location);
+  }
+
+  return (
+    <View style={styles.container}>
+      <Text>Permissions Requester</Text>
+      <Text>Location: {text}</Text>
+      <Pressable onPress={requestLocation} style={styles.button}>
+        <Text>Request location</Text>
+      </Pressable>
+    </View>
+  );
+}
+
+const requestLocation = () => {
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+        return;
       }
-      setLoading(false);
-      setLocation(null);
-    });
+
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+      console.log( "location: " + location.coords.latitude + ", " + location.coords.longitude );
+    })();
+  }, []);
+
+  let text = 'Waiting..';
+  if (errorMsg) {
+    text = errorMsg;
+  } else if (location) {
+    text = JSON.stringify(location);
+    navigation.navigate('home', {latitude: location.coords.latitude, longitude: location.coords.longitude});
+  }
 };
 
-function MapScreen() {
+function MapScreen( { route } ) {
+  // const { latitude1, longitude1 } = route.params || { latitude1: 0, longitude1: 0 }; // Default values if params are undefined
   // let loc = requestLocation;
   return (
     <View>
       <MapView
         style={{width: '100%', height: '100%'}}
-        // initialRegion={{
-          // latitude: loc.latitude,
-          // longitude: loc.longitude,
-          // latitudeDelta: 0.0922,
-          // longitudeDelta: 0.0421,
-        // }}
-      >
+        initialRegion={{
+          // latitude: location.coords.latitude,
+          // longitude: location.coords.longitude,
+          latitude: 37.7749,
+          longitude: -122.4194,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        }}>
       <Marker
             coordinate={{latitude: 37.78825,
             longitude: -122.4324}}
@@ -71,11 +118,11 @@ function MapScreen() {
         <Image source={require('./assets/marker-POC.png')} style={{height: 100, width: 35}}></Image>
       </Marker>
       </MapView>
-      <Pressable style={{...styles.circleButton, right: '7.5%', bottom: '15%'}}>
-        <Ionicons name="settings-sharp" size={30}/>
+      <Pressable style={{...styles.circleButton, right: '7.5%', bottom: '17%'}}>
+        <Ionicons name="settings-sharp" size={27.5}/>
       </Pressable>
       <Pressable style={{...styles.circleButton, right: '7.5%', bottom: '5%'}}>
-        <Ionicons name="add-outline" size={30}/>
+        <Ionicons name="add-outline" size={27.5}/>
       </Pressable>
     </View>
   );
@@ -145,7 +192,12 @@ function CarpoolScreen() {
             height: 100, 
             alignItems: 'center', 
             justifyContent: 'center' }
-          } ><Text style={{textAlign: 'center', fontStyle: 'italic'}}>{item.title}</Text></View>}
+          } >
+            
+          <Text style={{textAlign: 'center'}}>{item.title}</Text>
+          
+          </View>}
+        
           keyExtractor={item => item.id}
       />
     </View>
@@ -183,9 +235,21 @@ const styles = StyleSheet.create({
 
 
 export default function App() {
+  const Stack = createStackNavigator();
+
+
   return (
     <NavigationContainer>
-      <BottomNavigator/>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="PermissionsRequester"
+          component={PermissionsRequesterScreen}
+          options={{title: 'App needs location permission'}}
+        />
+        <Stack.Screen name="home" component={BottomNavigator} props />
+
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }
+
