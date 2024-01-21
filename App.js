@@ -14,8 +14,8 @@ import { NavigationContainer, useRoute, useNavigation } from '@react-navigation/
 
 
 
-
 const Tab = createBottomTabNavigator();
+
 
 function BottomNavigator() {
 
