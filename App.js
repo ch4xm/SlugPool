@@ -1,4 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { FlatList, Pressable, StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -26,12 +27,12 @@ export default function App() {
 
 function MapScreen() {
   return (
-    <>
+    <View >
       <MapView style={styles.map} />
       <Pressable style={styles.circleButton}>
         <Text adjustsFontSizeToFit>+</Text>
       </Pressable>
-    </>
+    </View>
   );
 }
 
@@ -71,9 +72,11 @@ const DATA = [
 ];
 
 function CarpoolScreen() {
+  const insets = useSafeAreaInsets();
+  
   return (
     // <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-    <SafeAreaView>
+    <View style={{ paddingTop: insets.top }}>
       <Text style={{textAlign: 'center'}}>Active Carpool Rides:</Text>
       <FlatList
         contentContainerStyle={{flexDirection: 'column', alignSelf: 'center', width: '75%', height: '80%'}}
@@ -81,7 +84,7 @@ function CarpoolScreen() {
         renderItem={({item}) => <View style={{marginVertical: 10, backgroundColor: 'gold', alignSelf: 'center', width: '90%', height: '45%', justifyContent: 'center', borderColor: 'black', borderWidth: 1}}><Text style={{textAlign: 'center'}}>{item.title}</Text></View>}
         keyExtractor={item => item.id}
       />
-    </SafeAreaView>
+    </View>
   );
 }
 
