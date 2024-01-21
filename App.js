@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import  MapView, { Marker } from 'react-native-maps';
 import { Ionicons } from '@expo/vector-icons';
+import GetLocation from 'react-native-get-location'
 
 const Tab = createBottomTabNavigator();
 
@@ -115,8 +116,18 @@ function CarpoolScreen() {
       <FlatList
         contentContainerStyle={styles.flatList}
         data={DATA}
-        renderItem={({item}) => <View style={{borderRadius: 5, marginVertical: 5, backgroundColor: 'gold', width: 350, height: 75, alignItems: 'center', justifyContent: 'center'}}><Text style={{textAlign: 'center'}}>{item.title}</Text></View>}
-        keyExtractor={item => item.id}
+        
+        renderItem={({item}) => <View style={
+          { borderRadius: 5,
+            marginVertical: 5, 
+            backgroundColor: 'gold', 
+            width: 350, 
+            height: 75, 
+            alignItems: 'center', 
+            justifyContent: 'center' }
+          } ><Text style={{textAlign: 'center'}}>{item.title}</Text></View>}
+        
+          keyExtractor={item => item.id}
       />
     </View>
   );
