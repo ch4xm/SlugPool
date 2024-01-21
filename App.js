@@ -1,11 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { FlatList, Pressable, StyleSheet, Text, View, SafeAreaView } from 'react-native';
+import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import {MapView, Marker} from 'react-native-maps';
+import  MapView, { Marker } from 'react-native-maps';
 import { Ionicons } from '@expo/vector-icons';
-import GetLocation from 'react-native-get-location' 
 
 const Tab = createBottomTabNavigator();
 
@@ -77,13 +76,8 @@ function CarpoolScreen() {
   
   return (
     // <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-<<<<<<< HEAD
     <View style={{ paddingTop: insets.top }}>
       <Text style={{textAlign: 'center'}}>Active Carpool Rides:</Text>
-=======
-    <SafeAreaView style={{ flex: 1, width: '100%', justifyContent: 'center', alignItems: 'center' }}>
-      <Text style={{textAlign: 'center', margin: 10}}>Active Carpool Rides:</Text>
->>>>>>> c90df8526bab194c5a0a7c165aa41a42ee47fd81
       <FlatList
         contentContainerStyle={styles.flatList}
         data={DATA}
