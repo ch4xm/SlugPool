@@ -1,8 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
+import { FlatList, Pressable, StyleSheet, Text, View, Image } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import  MapView, { Marker } from 'react-native-maps';
+import MapView, { Marker} from 'react-native-maps';
 import { Ionicons } from '@expo/vector-icons';
 // import GetLocation from 'react-native-get-location'
 import * as Location from 'expo-location';
@@ -120,35 +121,47 @@ function MapScreen( { route } ) {
 const DATA = [
   {
     id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: 'First Item',
+    title: 'Driver Name: \n\n Starting From: \t Coming From: \n Space Available: \t Price: ',
   },
   {
     id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: 'Second Item',
+    title: 'Driver Name: \n\n Starting From: \t Coming From: \n Space Available: \t Price: ',
   },
   {
     id: '58694a0f3da1-471f-bd96-145571e29d72',
-    title: 'Third Item',
+    title: 'Driver Name: \n\n Starting From: \t Coming From: \n Space Available: \t Price: ',
   },
   {
     id: '58694a0f-3da1-47f-bd96-145571e29d72',
-    title: 'Fourth Item',
+    title: 'Driver Name: \n\n Starting From: \t Coming From: \n Space Available: \t Price: ',
   },
   {
     id: '58694a0f-3da1-471fbd96-145571e29d72',
-    title: 'Fifth Item',
+    title: 'Driver Name: \n\n Starting From: \t Coming From: \n Space Available: \t Price: ',
   },
   {
     id: '58694a0f-3da1-471f-bd96-14551e29d72',
-    title: 'Sixth Item',
+    title: 'Driver Name: \n\n Starting From: \t Coming From: \n Space Available: \t Price: ',
   },
   {
     id: '58694a0f-3da1-471f-bd96-14557e29d72',
-    title: 'Seventh Item',
+    title: 'Driver Name: \n\n Starting From: \t Coming From: \n Space Available: \t Price: ',
   },
   {
     id: '58694a0f-3da1-471f-bd96145571e29d72',
-    title: 'Eighth Item',
+    title: 'Driver Name: \n\n Starting From: \t Coming From: \n Space Available: \t Price: ',
+  },
+  {
+    id: '586d94a0f-3da1-471f-bd96145571e29d72',
+    title: 'Driver Name: \n\n Starting From: \t Coming From: \n Space Available: \t Price: ',
+  },
+  {
+    id: '58694a0f-3da1-471f-bd96145571e29d72',
+    title: 'Driver Name: \n\n Starting From: \t Coming From: \n Space Available: \t Price: ',
+  },
+  {
+    id: '58694aa0f-3da1-471f-bd96145571e29d72',
+    title: 'Driver Name: \n\n Starting From: \t Coming From: \n Space Available: \t Price: ',
   },
 ];
 
@@ -156,18 +169,17 @@ function CarpoolScreen() {
   const insets = useSafeAreaInsets();
   
   return (
-    <View style={{ paddingTop: insets.top, flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text style={{textAlign: 'center'}}>Active Carpool Rides:</Text>
+    <View style={{ paddingTop: insets.top, justifyContent: 'center', alignItems: 'center', flex: 1}}>
+      <Text style={{textAlign: 'center', fontWeight: 'bold'}}> Active Carpool Rides:</Text>
       <FlatList
         contentContainerStyle={styles.flatList}
         data={DATA}
-        
         renderItem={({item}) => <View style={
           { borderRadius: 5,
             marginVertical: 5, 
-            backgroundColor: 'gold', 
+            backgroundColor: 'lightpink', 
             width: 350, 
-            height: 75, 
+            height: 100, 
             alignItems: 'center', 
             justifyContent: 'center' }
           } >
@@ -206,11 +218,10 @@ const styles = StyleSheet.create({
     bottom: '5%'
   },
   flatList: {
-    // marginVertical: 0,
-    flex: 1,
+    marginVertical: 0,
+    marginBottom: 10,
     alignContent: 'center',
     width: '75%', 
-    height: '80%'
   }
 });
 
