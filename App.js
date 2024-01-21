@@ -5,7 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import  MapView, { Marker } from 'react-native-maps';
 import { Ionicons } from '@expo/vector-icons';
-// import GetLocation from 'react-native-get-location' 
+import GetLocation from 'react-native-get-location'
 
 const Tab = createBottomTabNavigator();
 
@@ -18,15 +18,41 @@ function BottomNavigator() {
   )
 }
 
-export default function App() {
-  return (
-    <NavigationContainer>
-      <BottomNavigator/>
-    </NavigationContainer>
-  );
-}
+const requestLocation = () => {
+  setLoading(true);
+  setLocation(null);
+  setError(null);
+
+  GetLocation.getCurrentPosition({
+    enableHighAccuracy: true,
+    timeout: 30000,
+    rationale: {
+      title: 'Location permission',
+      message: 'The app needs the permission to request your location.',
+      buttonPositive: 'Ok',
+    },
+  })
+    .then(newLocation => {
+      setLoading(false);
+      setLocation(newLocation);
+    })
+    .catch(ex => {
+      if (isLocationError(ex)) {
+        const {code, message} = ex;
+        console.warn(code, message);
+        setError(code);
+      } else {
+        console.warn(ex);
+      }
+      setLoading(false);
+      setLocation(null);
+    });
+};
+
+
 
 function MapScreen() {
+  let loc = requestLocation;
   return (
     <View >
       <MapView style={{width: '100%', height: '100%'}} />
@@ -82,8 +108,18 @@ function CarpoolScreen() {
       <FlatList
         contentContainerStyle={styles.flatList}
         data={DATA}
-        renderItem={({item}) => <View style={{borderRadius: 5, marginVertical: 5, backgroundColor: 'gold', width: 350, height: 75, alignItems: 'center', justifyContent: 'center'}}><Text style={{textAlign: 'center'}}>{item.title}</Text></View>}
-        keyExtractor={item => item.id}
+        
+        renderItem={({item}) => <View style={
+          { borderRadius: 5,
+            marginVertical: 5, 
+            backgroundColor: 'gold', 
+            width: 350, 
+            height: 75, 
+            alignItems: 'center', 
+            justifyContent: 'center' }
+          } ><Text style={{textAlign: 'center'}}>{item.title}</Text></View>}
+        
+          keyExtractor={item => item.id}
       />
     </View>
   );
@@ -121,9 +157,8 @@ const styles = StyleSheet.create({
     bottom: '5%'
   },
   flatList: {
-    // marginVertical: 0,
-    flex: 1,
-    alignContent: 'center',
+    marginVertical: 10,
+    alignContent: 'flex-start',
     width: '75%', 
     height: '80%'
   }
