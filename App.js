@@ -2,8 +2,9 @@ import { StatusBar } from 'expo-status-bar';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import MapView from 'react-native-maps';
+import {MapView, Marker} from 'react-native-maps';
 import { Ionicons } from '@expo/vector-icons';
+import GetLocation from 'react-native-get-location' 
 
 const Tab = createBottomTabNavigator();
 
