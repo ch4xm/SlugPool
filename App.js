@@ -1,8 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
-import { FlatList, Pressable, StyleSheet, Text, View, SafeAreaView } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import MapView, { Marker} from 'react-native-maps';
+import  MapView, { Marker } from 'react-native-maps';
 import { Ionicons } from '@expo/vector-icons';
 // import GetLocation from 'react-native-get-location' 
 
@@ -27,12 +28,12 @@ export default function App() {
 
 function MapScreen() {
   return (
-    <>
+    <View >
       <MapView style={styles.map} />
       <Pressable style={styles.circleButton}>
         <Text adjustsFontSizeToFit>+</Text>
       </Pressable>
-    </>
+    </View>
   );
 }
 
@@ -72,17 +73,19 @@ const DATA = [
 ];
 
 function CarpoolScreen() {
+  const insets = useSafeAreaInsets();
+  
   return (
     // <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-    <SafeAreaView style={{ flex: 1, width: '100%', justifyContent: 'center', alignItems: 'center' }}>
-      <Text style={{textAlign: 'center', margin: 10}}>Active Carpool Rides:</Text>
+    <View style={{ paddingTop: insets.top }}>
+      <Text style={{textAlign: 'center'}}>Active Carpool Rides:</Text>
       <FlatList
         contentContainerStyle={styles.flatList}
         data={DATA}
         renderItem={({item}) => <View style={{borderRadius: 5, marginVertical: 5, backgroundColor: 'gold', width: 350, height: 75, alignItems: 'center', justifyContent: 'center'}}><Text style={{textAlign: 'center'}}>{item.title}</Text></View>}
         keyExtractor={item => item.id}
       />
-    </SafeAreaView>
+    </View>
   );
 }
 
