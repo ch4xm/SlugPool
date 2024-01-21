@@ -13,16 +13,16 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 import { useRoute } from '@react-navigation/native';
 import { initializeApp } from 'firebase/app';
-require('dotenv').config();
+// require('dotenv').config();
 
-const firebaseConfig = {
-  apiKey: 'AIzaSyC3wgvSzRB2_zS3tQH3X9AtfiOwtgVcUzI',
-  authDomain: "slugpool-cruzhacks24.firebaseapp.com",
-  projectId: "slugpool-cruzhacks24",
-  storageBucket: "slugpool-cruzhacks24.appspot.com",
-  messagingSenderId: "1057846058539",
-  appId: "1:1057846058539:web:0c8ccc6e592fa1fe0fd46e"
-};
+// const firebaseConfig = {
+//   apiKey: 'AIzaSyC3wgvSzRB2_zS3tQH3X9AtfiOwtgVcUzI',
+//   authDomain: "slugpool-cruzhacks24.firebaseapp.com",
+//   projectId: "slugpool-cruzhacks24",
+//   storageBucket: "slugpool-cruzhacks24.appspot.com",
+//   messagingSenderId: "1057846058539",
+//   appId: "1:1057846058539:web:0c8ccc6e592fa1fe0fd46e"
+// };
 
 
 
