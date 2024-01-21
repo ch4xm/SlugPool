@@ -102,19 +102,44 @@ const DATA = [
     id: '58694a0f-3da1-471f-bd96145571e29d72',
     title: 'Driver Name: \n Starting From: \t Coming From: \n Space Available: \t Price: ',
   },
+  {
+    id: '586d94a0f-3da1-471f-bd96145571e29d72',
+    title: 'Ninth Item',
+  },
+  {
+    id: '58694a0f-3da1-471f-bd96145571e29d72',
+    title: 'Tenth Item',
+  },
+  {
+    id: '58694aa0f-3da1-471f-bd96145571e29d72',
+    title: 'Eleventh Item',
+  },
 ];
 
 function CarpoolScreen() {
   const insets = useSafeAreaInsets();
   
   return (
-    <View style={{ paddingTop: insets.top, flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+    <View style={{ paddingTop: insets.top, justifyContent: 'center', alignItems: 'center', flex: 1}}>
       <Text style={{textAlign: 'center'}}>Active Carpool Rides:</Text>
       <FlatList
         contentContainerStyle={styles.flatList}
         data={DATA}
+<<<<<<< HEAD
         renderItem={({item}) => <View style={{marginVertical: 10, backgroundColor: 'lightpink', alignSelf: 'center', width: '100%', height: '50%', justifyContent: 'center', borderColor: 'black', borderRadius: 16, borderWidth: 2}}><Text style={{textAlign: 'left', fontWeight:'bold'}}>{item.title}</Text></View>}
         keyExtractor={item => item.id} 
+=======
+        renderItem={({item}) => <View style={
+          { borderRadius: 5,
+            marginVertical: 5, 
+            backgroundColor: 'gold', 
+            width: 350, 
+            height: 75, 
+            alignItems: 'center', 
+            justifyContent: 'center' }
+          } ><Text style={{textAlign: 'center'}}>{item.title}</Text></View>}
+          keyExtractor={item => item.id}
+>>>>>>> 860c6ab25dc16b16eaea4a9bce6141ff83faf49b
       />
     </View>
   );
@@ -144,11 +169,10 @@ const styles = StyleSheet.create({
     bottom: '5%'
   },
   flatList: {
-    // marginVertical: 0,
-    flex: 1,
+    marginVertical: 0,
+    marginBottom: 10,
     alignContent: 'center',
     width: '75%', 
-    height: '80%'
   }
 });
 
