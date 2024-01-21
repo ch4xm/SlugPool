@@ -5,7 +5,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MapView, { Marker} from 'react-native-maps';
 import { Ionicons } from '@expo/vector-icons';
-<<<<<<< HEAD
 // import GetLocation from 'react-native-get-location'
 import * as Location from 'expo-location';
 import React, { useState, useEffect } from 'react';
@@ -25,11 +24,6 @@ const firebaseConfig = {
 };
 
 
-=======
-// import {Transitioning, Transition} from 'react-native-reanimated';
-// import GetLocation from 'react-native-get-location';
-// import React, {useRef} from 'react';
->>>>>>> bc02c94 (yep)
 
 const Tab = createBottomTabNavigator();
 
