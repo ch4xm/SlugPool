@@ -101,6 +101,7 @@ function MapScreen( { route } ) {
     <View>
       <MapView
         style={{width: '100%', height: '100%'}}
+        
         initialRegion={{
           // latitude: location.coords.latitude,
           // longitude: location.coords.longitude,
