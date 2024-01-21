@@ -99,6 +99,24 @@ const requestLocation = () => {
   }
 };
 
+// const Map = () => {
+//   const [pin, setPin] = useState({
+//     latitude: 37.78825,
+//     longitude: -122.4324,
+//   });
+
+//   return (
+//     <MapView>
+//       <Marker
+//         draggable
+//         coordinate={pin}
+//         onDragEnd={e => {
+//           setPin(e.nativeEvent.coordinate);
+//         }} />
+//     </MapView>
+//   );
+// };
+
 function MapScreen({ route }) {
   const insets = useSafeAreaInsets();
   const [settingsVisible, setSettingsVisible] = useState(false);
@@ -110,6 +128,26 @@ function MapScreen({ route }) {
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
   });
+
+  const [markers, setMarkers] = useState([
+    { key: '1', coordinate: { latitude: 37.78825, longitude: -122.4324 } },
+    // Add more markers as needed
+  ]);
+
+  // const [markerPosition, setMarkerPosition] = useState({
+  //   latitude: 37.78825,
+  //   longitude: -122.4324,
+  // });
+
+  // Function to add a new marker
+  const addMarker = (newCoordinate) => {
+    const newMarker = {
+      key: markers.length.toString(), // Assign a unique key
+      coordinate: newCoordinate,
+    };
+
+    setMarkers([...markers, newMarker]);
+  };
 
   useEffect(() => {
     var intervalCount = 0;
@@ -216,17 +254,44 @@ function MapScreen({ route }) {
         showsMyLocationButton={true}
         showsUserLocation={true}
         onRegionChange={onRegionChange}
-      />
+      >
+        {markers.map((marker) => (
+        <Marker
+          key={marker.key}
+          coordinate={marker.coordinate}
+          draggable
+          onDragEnd={(e) => {
+            const updatedMarkers = markers.map((m) =>
+              m.key === marker.key ? { ...m, coordinate: e.nativeEvent.coordinate } : m
+            );
+            setMarkers(updatedMarkers);
+          }}
+        >
+          <Image source={require('./assets/marker.png')} style={{ width: 75, height: 75 }} />
+        </Marker>
+      ))}
+      </MapView>
+      {/* <Marker
+        
+        coordinate={markerPosition}
+        draggable
+        onDragEnd={(e) => setMarkerPosition(e.nativeEvent.coordinate)}
+      > 
+      </Marker> */}
+
       <Pressable style={{ ...styles.circleButton, right: '5%', bottom: '50%' }} onPress={() => setSettingsVisible(true)}>
         <Ionicons name="settings-sharp" size={30} />
       </Pressable>
-      <Pressable style={{ ...styles.circleButton, right: '5%', bottom: '40%' }} onPress={() => setModalVisible(true)}>
+      <Pressable style={{ ...styles.circleButton, right: '5%', bottom: '50%' }} onPress={() => setModalVisible(true)}>
         <Ionicons name="add-outline" size={30} />
       </Pressable>
     </View>
   );
 }
 
+function submitRide(name, seats, start, destination, price) {
+
+}
 
 const DATA = [
   {
@@ -310,13 +375,14 @@ function CarpoolScreen() {
         data={data}
         renderItem={({ item }) => <View style={
           {
-            borderRadius: 20,
+            borderRadius: 10,
             marginVertical: 5,
-            backgroundColor: 'lightpink',
+            backgroundColor: 'gold',
             width: 350,
-            height: 100,
+            // height: 100,
             alignItems: 'left',
-            justifyContent: 'center'
+            justifyContent: 'center',
+            paddingVertical: 10
           }
         } >
             <Text style={{ textAlign: 'left', fontWeight: 'bold' }}>{`Driver Name: ${item.title.username}\nStarting From: ${item.title.pickup}\nHeading Towards: ${item.title.dropoff}\nSpace Available: ${item.title.capacity}\nContact: ${item.title.contactInfo}`}</Text>
