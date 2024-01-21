@@ -29,7 +29,7 @@ export default function App() {
 function MapScreen() {
   return (
     <View >
-      <MapView style={styles.map} />
+      <MapView style={{width: '100%', height: '100%'}} />
       <Pressable style={styles.circleButton}>
         <Text adjustsFontSizeToFit>+</Text>
       </Pressable>
@@ -77,7 +77,7 @@ function CarpoolScreen() {
   
   return (
     // <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-    <View style={{ paddingTop: insets.top }}>
+    <View style={{ paddingTop: insets.top, paddingBottom: 10, flex: 1, justifyContent: 'center', alignItems: 'center'}}>
       <Text style={{textAlign: 'center'}}>Active Carpool Rides:</Text>
       <FlatList
         contentContainerStyle={styles.flatList}
@@ -104,13 +104,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  statusBar: {
-    
-  },
-  map: {
-    width: '100%',
-    height: '100%',
-  },
   circleButton: {
     borderRadius: 100,
     backgroundColor: 'white',
@@ -128,8 +121,9 @@ const styles = StyleSheet.create({
     bottom: '5%'
   },
   flatList: {
-    marginVertical: 10,
-    alignContent: 'flex-start',
+    // marginVertical: 0,
+    flex: 1,
+    alignContent: 'center',
     width: '75%', 
     height: '80%'
   }
