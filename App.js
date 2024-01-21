@@ -13,6 +13,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 import { useRoute } from '@react-navigation/native';
 import { initializeApp } from 'firebase/app';
+import { TextInput } from 'react-native-gesture-handler';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -161,7 +162,10 @@ function MapScreen({ route }) {
               onPress={() => setSettingsVisible(!settingsVisible)}>
               <Ionicons name="close-outline" size={30}></Ionicons>
             </Pressable>
-            <Text style={styles.modalText}>Hello World!</Text>
+            <Text style={styles.modalText}>Cancel your carpool offer</Text>
+            <TextInput style={styles.textBox}></TextInput>
+            <TextInput style={styles.textBox}></TextInput>
+            <TextInput style={styles.textBox}></TextInput>
           </View>
         </Modal>
         <Modal
@@ -322,11 +326,19 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
   },
   modalText: {
-    marginTop: 16,
+    marginTop: 50,
+    marginBottom: 20,
     textAlign: 'center',
     fontSize: 24, 
     fontWeight: 'bold'
   },
+  textBox: {
+    borderWidth: 1,
+    borderColor: 'black',
+    marginVertical: 10,
+    width: '65%',
+    height: '7.5%'
+  }
 });
 
 
