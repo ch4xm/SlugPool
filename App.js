@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { FlatList, Pressable, StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import {MapView, Marker} from 'react-native-maps';
+import MapView, { Marker} from 'react-native-maps';
 import { Ionicons } from '@expo/vector-icons';
 import GetLocation from 'react-native-get-location' 
 
@@ -39,35 +39,35 @@ function MapScreen() {
 const DATA = [
   {
     id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: 'First Item',
+    title: '\t\tDriver Name:\n \n Starting From: \t \tComing From: \n\n Space Available: \t Price: ',
   },
   {
     id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: 'Second Item',
+    title: 'Driver Name: \n Starting From: \t Coming From: \n Space Available: \t Price: ',
   },
   {
     id: '58694a0f3da1-471f-bd96-145571e29d72',
-    title: 'Third Item',
+    title: 'Driver Name: \n Starting From: \t Coming From: \n Space Available: \t Price: ',
   },
   {
     id: '58694a0f-3da1-47f-bd96-145571e29d72',
-    title: 'Fourth Item',
+    title: 'Driver Name: \n Starting From: \t Coming From: \n Space Available: \t Price: ',
   },
   {
     id: '58694a0f-3da1-471fbd96-145571e29d72',
-    title: 'Fifth Item',
+    title: 'Driver Name: \n Starting From: \t Coming From: \n Space Available: \t Price: ',
   },
   {
     id: '58694a0f-3da1-471f-bd96-14551e29d72',
-    title: 'Sixth Item',
+    title: 'Driver Name: \n Starting From: \t Coming From: \n Space Available: \t Price: ',
   },
   {
     id: '58694a0f-3da1-471f-bd96-14557e29d72',
-    title: 'Seventh Item',
+    title: 'Driver Name: \n Starting From: \t Coming From: \n Space Available: \t Price: ',
   },
   {
     id: '58694a0f-3da1-471f-bd96145571e29d72',
-    title: 'Eighth Item',
+    title: 'Driver Name: \n Starting From: \t Coming From: \n Space Available: \t Price: ',
   },
 ];
 
@@ -79,8 +79,8 @@ function CarpoolScreen() {
       <FlatList
         contentContainerStyle={{flexDirection: 'column', alignSelf: 'center', width: '75%', height: '80%'}}
         data={DATA}
-        renderItem={({item}) => <View style={{marginVertical: 10, backgroundColor: 'gold', alignSelf: 'center', width: '90%', height: '45%', justifyContent: 'center', borderColor: 'black', borderWidth: 1}}><Text style={{textAlign: 'center'}}>{item.title}</Text></View>}
-        keyExtractor={item => item.id}
+        renderItem={({item}) => <View style={{marginVertical: 10, backgroundColor: 'lightpink', alignSelf: 'center', width: '100%', height: '50%', justifyContent: 'center', borderColor: 'black', borderRadius: 16, borderWidth: 2}}><Text style={{textAlign: 'left', fontWeight:'bold'}}>{item.title}</Text></View>}
+        keyExtractor={item => item.id} 
       />
     </SafeAreaView>
   );
