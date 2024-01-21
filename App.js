@@ -176,6 +176,8 @@ function MapScreen({ route }) {
             </Pressable>
             <Text style={styles.modalText}>Offer a Ride</Text>
             <TextInput style={styles.textBox} placeholder='Name' placeholderTextColor={'#808080'}></TextInput>
+            <TextInput style={styles.textBox} placeholder='Phone Number' placeholderTextColor={'#808080'}></TextInput>
+            <TextInput style={styles.textBox} placeholder='Carpool Seats Available' placeholderTextColor={'#808080'}></TextInput>
             <TextInput style={styles.textBox} placeholder='Carpool Seats Available' placeholderTextColor={'#808080'}></TextInput>
             <TextInput style={styles.textBox} placeholder='Starting Point' placeholderTextColor={'#808080'}></TextInput>
             <TextInput style={styles.textBox} placeholder='Destination' placeholderTextColor={'#808080'}></TextInput>
