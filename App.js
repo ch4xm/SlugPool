@@ -12,7 +12,17 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 import { useRoute } from '@react-navigation/native';
+import { initializeApp } from 'firebase/app';
+require('dotenv').config();
 
+const firebaseConfig = {
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: "slugpool-cruzhacks24.firebaseapp.com",
+  projectId: "slugpool-cruzhacks24",
+  storageBucket: "slugpool-cruzhacks24.appspot.com",
+  messagingSenderId: "1057846058539",
+  appId: "1:1057846058539:web:0c8ccc6e592fa1fe0fd46e"
+};
 
 
 
@@ -95,7 +105,7 @@ const requestLocation = () => {
 };
 
 function MapScreen( { route } ) {
-  // const { latitude1, longitude1 } = route.params || { latitude1: 0, longitude1: 0 }; // Default values if params are undefined
+  // const { latitude, longitude } = route.params || { latitude: 0, longitude: 0 }; // Default values if params are undefined
   // let loc = requestLocation;
   return (
     <View>
@@ -104,8 +114,8 @@ function MapScreen( { route } ) {
         initialRegion={{
           // latitude: location.coords.latitude,
           // longitude: location.coords.longitude,
-          latitude: 37.7749,
-          longitude: -122.4194,
+          latitude: 122,
+          longitude: longitude,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
