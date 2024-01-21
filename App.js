@@ -3,8 +3,9 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { FlatList, Pressable, StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import MapView from 'react-native-maps';
+import {MapView, Marker} from 'react-native-maps';
 import { Ionicons } from '@expo/vector-icons';
+import GetLocation from 'react-native-get-location' 
 
 const Tab = createBottomTabNavigator();
 
@@ -76,12 +77,17 @@ function CarpoolScreen() {
   
   return (
     // <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+<<<<<<< HEAD
     <View style={{ paddingTop: insets.top }}>
       <Text style={{textAlign: 'center'}}>Active Carpool Rides:</Text>
+=======
+    <SafeAreaView style={{ flex: 1, width: '100%', justifyContent: 'center', alignItems: 'center' }}>
+      <Text style={{textAlign: 'center', margin: 10}}>Active Carpool Rides:</Text>
+>>>>>>> c90df8526bab194c5a0a7c165aa41a42ee47fd81
       <FlatList
-        contentContainerStyle={{flexDirection: 'column', alignSelf: 'center', width: '75%', height: '80%'}}
+        contentContainerStyle={styles.flatList}
         data={DATA}
-        renderItem={({item}) => <View style={{marginVertical: 10, backgroundColor: 'gold', alignSelf: 'center', width: '90%', height: '45%', justifyContent: 'center', borderColor: 'black', borderWidth: 1}}><Text style={{textAlign: 'center'}}>{item.title}</Text></View>}
+        renderItem={({item}) => <View style={{borderRadius: 5, marginVertical: 5, backgroundColor: 'gold', width: 350, height: 75, alignItems: 'center', justifyContent: 'center'}}><Text style={{textAlign: 'center'}}>{item.title}</Text></View>}
         keyExtractor={item => item.id}
       />
     </View>
@@ -125,5 +131,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     right: '10%',
     bottom: '5%'
-},
+  },
+  flatList: {
+    marginVertical: 10,
+    alignContent: 'flex-start',
+    width: '75%', 
+    height: '80%'
+  }
 });
