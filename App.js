@@ -6,6 +6,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import  MapView, { Marker } from 'react-native-maps';
 import { Ionicons } from '@expo/vector-icons';
 import GetLocation from 'react-native-get-location'
+import * as Location from 'expo-location';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
 const Tab = createBottomTabNavigator();
 
@@ -52,7 +55,7 @@ const requestLocation = () => {
 
 
 function MapScreen() {
-  let loc = requestLocation;
+  // let loc = requestLocation;
   return (
     <View >
       <MapView
@@ -125,7 +128,11 @@ function CarpoolScreen() {
             height: 75, 
             alignItems: 'center', 
             justifyContent: 'center' }
-          } ><Text style={{textAlign: 'center'}}>{item.title}</Text></View>}
+          } >
+            
+          <Text style={{textAlign: 'center'}}>{item.title}</Text>
+          
+          </View>}
         
           keyExtractor={item => item.id}
       />
@@ -175,9 +182,34 @@ const styles = StyleSheet.create({
 
 
 export default function App() {
+  // const [location, setLocation] = useState(null);
+  // const [errorMsg, setErrorMsg] = useState(null);
+
+  // useEffect(() => {
+  //   (async () => {
+      
+  //     let { status } = await Location.requestForegroundPermissionsAsync();
+  //     if (status !== 'granted') {
+  //       setErrorMsg('Permission to access location was denied');
+  //       return;
+  //     }
+
+  //     let location = await Location.getCurrentPositionAsync({});
+  //     setLocation(location);
+  //   })();
+  // }, []);
+
+  // let text = 'Waiting..';
+  // if (errorMsg) {
+  //   text = errorMsg;
+  // } else if (location) {
+  //   text = JSON.stringify(location);
+  // }
+
   return (
     <NavigationContainer>
       <BottomNavigator/>
     </NavigationContainer>
   );
 }
+
