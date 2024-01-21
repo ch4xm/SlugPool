@@ -11,7 +11,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer, useRoute, useNavigation } from '@react-navigation/native';
-
+import {addCarpool, addPassenger, removeCarpool, removePassenger} from "./scripts/local_storage.js";
 
 
 
